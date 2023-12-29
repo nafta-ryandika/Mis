@@ -10,6 +10,10 @@ class Auth extends CI_Controller
 	}
 	public function index()
 	{
+		if ($this->session->userdata('user_id')) {
+			redirect('user');
+		}
+
 		$this->form_validation->set_rules('inUser', 'User', 'trim|required');
 		$this->form_validation->set_rules('inPassword', 'Password', 'trim|required');
 
@@ -61,6 +65,10 @@ class Auth extends CI_Controller
 
 	public function registration()
 	{
+		if ($this->session->userdata('user_id')) {
+			redirect('user');
+		}
+
 		$this->form_validation->set_rules('inUserid', 'User Id', 'required|trim|is_unique[m_user.user_id]', ['is_unique' => 'This User Id already registered !']);
 		$this->form_validation->set_rules('inUser', 'User Name', 'required|trim');
 		$this->form_validation->set_rules('inEmail', 'Email Address', 'required|trim|valid_email');

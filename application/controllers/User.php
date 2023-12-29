@@ -20,4 +20,25 @@ class User extends CI_Controller
         $this->load->view('user/index', $data);
         $this->load->view('templates/footer');
     }
+
+    public function edit()
+    {
+        $data['title'] = 'Edit Profile';
+        $data['user'] = $this->db->get_where('m_user', ['user_id' => $this->session->userdata('user_id')])->row_array();
+
+        $this->form_validation->set_rules('inName', 'Name', 'required|trim');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('user/edit', $data);
+            $this->load->view('templates/footer');
+        } else {
+            $name = $this->input->post('inName');
+
+            $this->db->where('user_id');
+            $this->db->update()
+        }
+    }
 }

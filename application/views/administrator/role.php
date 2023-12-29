@@ -29,7 +29,7 @@
                             <th scope="row"><?= $i ?></th>
                             <td><?= $data_role['role']; ?></td>
                             <td>
-                                <a href="<?= base_url() ?>" class="badge badge-success">Access</a>
+                                <a href="<?= base_url('administrator/roleaccess/') . $data_role['id'] ?>" class="badge badge-success">Access</a>
                                 <a href="" class="badge badge-warning">Edit</a>
                                 <a href="" class="badge badge-danger">Delete</a>
                             </td>
@@ -54,15 +54,15 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAddlabel">Add Menu</h5>
+                <h5 class="modal-title" id="modalAddlabel">Add Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu') ?>" method="post">
+            <form action="<?= base_url('administrator/role') ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="inMenu" name="inMenu" placeholder="Menu Name">
+                        <input type="text" class="form-control" id="inRole" name="inRole" placeholder="Role Name">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -48,6 +48,30 @@
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('assets/'); ?>js/sb-admin-2.min.js"></script>
 
+<script>
+    $('.custom-file-input').on('change', function() {
+        let fileName = $(this).val().split('\\').pop();
+        $(this).next('.custom-file-label').addClass("selected").html(fileName);
+    });
+
+    $('.form-check-input').on('click', function() {
+        const menu_id = $(this).data('menu');
+        const role_id = $(this).data('role');
+
+        $.ajax({
+            url: "<?= base_url('administrator/changeAccess') ?>",
+            type: 'POST',
+            data: {
+                menu_id: menu_id,
+                role_id: role_id
+            },
+            success: function() {
+                document.location.href = "<?= base_url('administrator/roleAccess/') ?>" + role_id;
+            }
+        })
+    });
+</script>
+
 </body>
 
 </html>
