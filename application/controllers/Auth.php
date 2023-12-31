@@ -90,14 +90,45 @@ class Auth extends CI_Controller
 				'department' => '',
 				'division' => '',
 				'role_id' => 2,
-				'status' => 1,
+				'status' => 0,
 				'created_by' => 'administrator',
 				'created_at' => date('Y-m-d h:i:s')
 			];
 
-			$this->db->insert('m_user', $data);
+			// $this->db->insert('m_user', $data);
+
+			$this->_sendEmail();
+
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Success ! Your account has been created.</div>');
 			redirect('auth');
+		}
+	}
+
+	private function _sendEmail()
+	{
+		$config = [
+			'protocol' => 'smtp',
+			'smtp_host' => 'mail.megamarinepride.com',
+			'smtp_user' => 'hello@megamarinepride.com',
+			'smtp_pass' => 'cNaG(Wt&4nKy+&&*',
+			'smtp_port' => '465',
+			'mailtype' => 'html',
+			'charset' => 'utf-8',
+			'newline' => "\r\n"
+		];
+
+		$this->load->library('email', $config);
+
+		$this->email->from('hello@megamarinepride.com', 'Mis Administrator');
+		$this->email->to('sysdev@megamarinepride.com');
+		$this->email->subject('test');
+		$this->email->message('test');
+
+		if ($this->email->send()) {
+			return true;
+		} else {
+			echo $this->email->print_debugger();
+			die;
 		}
 	}
 
