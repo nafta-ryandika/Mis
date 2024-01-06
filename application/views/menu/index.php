@@ -9,10 +9,8 @@
 
             <?= form_error('inMenu', '<div class="alert alert-danger role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
-
-            <a href="" class="btn btn-success mb-3" data-toggle="modal" data-target="#modalAdd">Add New</a>
-
-            <table class="table table-hover">
+            <button class="btn btn-success btn-md mb-3" data-toggle="modal" data-target="#modalAdd"><i class="fa-solid fa-square-plus mr-2"></i>Add New</button>
+            <table class="table table-hover" id="dataTable">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -29,8 +27,8 @@
                             <th scope="row"><?= $i ?></th>
                             <td><?= $data_menu['menu']; ?></td>
                             <td>
-                                <a href="" class="badge badge-warning">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a href="" class="btn btn-warning btn-md"><i class="fa-solid fa-pen-to-square mr-4"></i>Edit</a>
+                                <a href="<?= base_url('menu/delete?') . 'delete=menu&id=' . $data_menu['id'] ?>" class="btn btn-danger btn-md" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark mr-2"></i>Delete</a>
                             </td>
                         </tr>
                     <?php
@@ -65,8 +63,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary btn-md col-2">Save</button>
                 </div>
             </form>
         </div>

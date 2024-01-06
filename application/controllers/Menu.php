@@ -25,10 +25,18 @@ class Menu extends CI_Controller
             $this->load->view('menu/index', $data);
             $this->load->view('templates/footer');
         } else {
-            $this->db->insert('m_menu', ['menu' => $this->input->post('inMenu')]);
+            $this->db->insert('m_menu', ['menu' => $this->input->post('inMenu'), 'created_by' => $this->session->userdata('user_id')]);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Saved !</div>');
             redirect('menu');
         }
+    }
+
+    public function deleteMenu()
+    {
+        $delete = $this->input->get('delete');
+        $id = $this->input->get('id');
+
+        $this;
     }
 
     public function submenu()

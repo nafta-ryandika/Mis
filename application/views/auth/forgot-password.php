@@ -17,25 +17,18 @@
                                     <b style="font-size: 32px;">Web</b><a style="font-size: 30px;"> Information System</a>
                                 </div>
                                 <?= $this->session->flashdata('message'); ?>
-                                <form class="user" method="post" action="<?= base_url('auth'); ?>">
+                                <form class="user" method="post" action="<?= base_url('auth/forgotPassword'); ?>">
                                     <div class="form-group">
-                                        <input type="text" class="form-control form-control-user" id="inUserid" name="inUserid" placeholder="User Id" value="<?= set_value('inUser') ?>">
+                                        <input type="text" class="form-control form-control-user" id="inUserid" name="inUserid" placeholder="User Id" value="<?= set_value('inUserid') ?>">
                                         <?= form_error('inUserid', '<small class="text-danger pl-3">', '</small>') ?>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control form-control-user" id="inPassword" name="inPassword" placeholder="Password">
-                                        <?= form_error('inPassword', '<small class="text-danger pl-3">', '</small>') ?>
-                                    </div>
                                     <button type="submit" class="btn btn-primary btn-user btn-block">
-                                        Login
+                                        Reset Password
                                     </button>
                                 </form>
                                 <hr>
                                 <div class="text-center">
-                                    <a class="small" href="<?= base_url('auth/forgotPassword') ?>">Forgot Password?</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="<?= base_url('auth/registration') ?>">Create an Account!</a>
+                                    <a class="small" href="<?= base_url('auth') ?>">Back to login</a>
                                 </div>
                             </div>
                         </div>

@@ -18,6 +18,7 @@
     <!-- Custom styles for this template-->
     <link href="<?= base_url('assets/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
 
+    <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/logo-figure-inverse1.png">
 </head>
 
 <body class="bg-gradient-primary">
