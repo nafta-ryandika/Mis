@@ -24,6 +24,7 @@ class Menu extends CI_Controller
             $this->load->view('templates/topbar', $data);
             $this->load->view('menu/index', $data);
             $this->load->view('templates/footer');
+            $this->load->view('templates/script', $data);
         } else {
             $this->db->insert('m_menu', ['menu' => $this->input->post('inMenu'), 'created_by' => $this->session->userdata('user_id')]);
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Saved !</div>');
@@ -31,12 +32,34 @@ class Menu extends CI_Controller
         }
     }
 
-    public function deleteMenu()
+    public function update()
+    {
+        $update = $this->input->get('update');
+        $id = $this->input->get('id');
+
+        if ($update == 'menu') {
+            $inMenu = $this->input->post('inMenu');
+
+            $this->db->set('menu', $inMenu);
+            $this->db->where('id', $id);
+            $this->db->update('m_menu');
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Updated !</div>');
+        redirect('menu');
+    }
+
+    public function delete()
     {
         $delete = $this->input->get('delete');
         $id = $this->input->get('id');
 
-        $this;
+        if ($delete == 'menu') {
+            $this->db->delete('m_menu', ['id' => $id]);
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted !</div>');
+        redirect('menu');
     }
 
     public function submenu()
