@@ -56,6 +56,8 @@ class Menu extends CI_Controller
 
         if ($delete == 'menu') {
             $this->db->delete('m_menu', ['id' => $id]);
+        } else if ($delete == 'submenu') {
+            $this->db->delete('m_submenu', ['id' => $id]);
         }
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted !</div>');

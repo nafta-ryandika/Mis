@@ -27,21 +27,8 @@
                             <th scope="row"><?= $i ?></th>
                             <td><?= $data_menu['menu']; ?></td>
                             <td>
-                                <!-- <div class="class row">
-                                    div.class
-                                </div> -->
-                                <div class="btn-group col-lg row" role="group">
-                                    <a class="btn btn-warning btn-md btn-block" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_menu['id']; ?>','<?= $data_menu['menu']; ?>')"><i class="fa-solid fa-pen-to-square mr-4"></i>Edit</a>
-                                    <a class="btn btn-danger btn-md btn-block" href="<?= base_url('menu/delete?') . 'delete=menu&id=' . $data_menu['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark mr-2"></i>Delete</a>
-                                    <!-- <div class="col-md-6 custom">
-                                        <button type="button" class="btn btn-sm btn-secondary">Edit</button>
-                                    </div>
-                                    <div class="col-md-6 custom">
-                                        <form action="" method="POST">
-                                            <button type="button" class="btn btn-sm btn-danger">Delete</button>
-                                        </form>
-                                    </div> -->
-                                </div>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_menu['id']; ?>','<?= $data_menu['menu']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
+                                <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=menu&id=' . $data_menu['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
                             </td>
                         </tr>
                     <?php

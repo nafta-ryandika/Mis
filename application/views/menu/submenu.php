@@ -41,8 +41,8 @@
                             <td><?= $data_submenu['icon']; ?></td>
                             <td><?= $data_submenu['status']; ?></td>
                             <td>
-                                <a href="" class="badge badge-warning">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_submenu['id']; ?>','<?= $data_submenu['menu']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
+                                <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=submenu&id=' . $data_submenu['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
                             </td>
                         </tr>
                     <?php
