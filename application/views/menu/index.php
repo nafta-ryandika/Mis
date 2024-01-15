@@ -24,7 +24,7 @@
                     foreach ($menu as $data_menu) :
                     ?>
                         <tr>
-                            <th scope="row"><?= $i ?></th>
+                            <td scope="row"><?= $i ?></td>
                             <td><?= $data_menu['menu']; ?></td>
                             <td>
                                 <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_menu['id']; ?>','<?= $data_menu['menu']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>

@@ -32,6 +32,13 @@ class Menu extends CI_Controller
         }
     }
 
+    public function getData()
+    {
+        $id = $this->input->post('id');
+        $data['submenu'] = $this->db->get_where('m_submenu', ['id' => $id])->result_array();
+        echo json_encode($data);
+    }
+
     public function update()
     {
         $update = $this->input->get('update');
@@ -53,15 +60,17 @@ class Menu extends CI_Controller
     {
         $delete = $this->input->get('delete');
         $id = $this->input->get('id');
+        $redirect = '';
 
         if ($delete == 'menu') {
             $this->db->delete('m_menu', ['id' => $id]);
         } else if ($delete == 'submenu') {
             $this->db->delete('m_submenu', ['id' => $id]);
+            $redirect = '/submenu';
         }
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted !</div>');
-        redirect('menu');
+        redirect('menu' . $redirect);
     }
 
     public function submenu()
@@ -79,12 +88,21 @@ class Menu extends CI_Controller
         $this->form_validation->set_rules('inIcon', 'Icon', 'required');
         $this->form_validation->set_rules('inStatus', 'Status', 'required');
 
+        $mode = $this->input->post("mode");
+
+        // if (isset($mode)) {
+        $data['mode'] = $mode;
+        // echo ('lalala' . $mode);
+        // die;
+        // }
+
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
             $this->load->view('menu/submenu', $data);
             $this->load->view('templates/footer');
+            $this->load->view('templates/script', $data);
         } else {
             $data = [
                 'title' => $this->input->post('inTitle'),

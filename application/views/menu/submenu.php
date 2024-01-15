@@ -16,7 +16,7 @@
 
             <a href="" class="btn btn-success mb-3" data-toggle="modal" data-target="#modalAdd">Add New</a>
 
-            <table class="table table-hover">
+            <table class="table table-hover" id="dataTable">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -34,14 +34,14 @@
                     foreach ($submenu as $data_submenu) :
                     ?>
                         <tr>
-                            <th scope="row"><?= $i ?></th>
+                            <td scope="row"><?= $i ?></td>
                             <td><?= $data_submenu['title']; ?></td>
                             <td><?= $data_submenu['menu']; ?></td>
                             <td><?= $data_submenu['url']; ?></td>
                             <td><?= $data_submenu['icon']; ?></td>
                             <td><?= $data_submenu['status']; ?></td>
                             <td>
-                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_submenu['id']; ?>','<?= $data_submenu['menu']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
+                                <a class="btn btn-warning" onclick="getData(<?= $data_submenu['id'] ?>)"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
                                 <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=submenu&id=' . $data_submenu['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
                             </td>
                         </tr>
@@ -61,6 +61,17 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
+<?php
+// if ($mode == "edit") {
+// echo '<span id="txtKerjaId" style="display : none;">' . $inKerjaId . '</span>';
+// echo '<span id="txtKerjaName" style="display : none;">' . $inKerjaName . '</span>';
+// echo '<span id="txtKerjaPrice" style="display : none;">' . $inKerjaPrice . '</span>';
+// echo '<span id="txtKerjaSatuanId" style="display : none;">' . $inKerjaSatuanId . '</span>';
+
+echo ('lalala' . $mode);
+// }
+?>
+
 <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddlabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
