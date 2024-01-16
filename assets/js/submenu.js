@@ -25,23 +25,15 @@ function getData(id) {
 				inIcon = data.submenu[i].icon;
 				inStatus = data.submenu[i].status;
 			}
+
+            $(".modal-dialog .modal-content .modal-body #inTitle").val(inTitle);
+            $(".modal-dialog .modal-content .modal-body #inMenu_id").val(inMenu_id);
+            $(".modal-dialog .modal-content .modal-body #inUrl").val(inUrl);
+            $(".modal-dialog .modal-content .modal-body #inIcon").val(inIcon);
+            $(".modal-dialog .modal-content .modal-body #inStatus").val(inStatus);
         }
     }).done(function (){
-        $.ajax({
-            type: "POST",
-            url: base_url+"menu/submenu",
-            data:   "mode=edit&inTitle="+inTitle+
-                    "&inMenu_id="+inMenu_id+
-                    "&inUrl="+inUrl+
-                    "&inIcon="+inIcon+
-                    "&inStatus="+inStatus,
-            // dataType: "dataType",
-            cache: false,
-            success: function (data) {
-                $('#modalAdd').modal('show',function (){
-                    // $('#inTitle').val('lalalala');
-                });
-            }
-        });
+        $('form').attr('action',  base_url + 'menu/update?'+'update=submenu&id=' + id);
+        $('#modalAdd').modal('show');
     });
 }

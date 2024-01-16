@@ -43,6 +43,7 @@ class Menu extends CI_Controller
     {
         $update = $this->input->get('update');
         $id = $this->input->get('id');
+        $redirect = '';
 
         if ($update == 'menu') {
             $inMenu = $this->input->post('inMenu');
@@ -50,10 +51,32 @@ class Menu extends CI_Controller
             $this->db->set('menu', $inMenu);
             $this->db->where('id', $id);
             $this->db->update('m_menu');
+        } else if ($update == 'submenu') {
+            $this->form_validation->set_rules('inTitle', 'Title', 'required');
+            $this->form_validation->set_rules('inMenu_id', 'Menu', 'required');
+            $this->form_validation->set_rules('inUrl', 'Url', 'required');
+            $this->form_validation->set_rules('inIcon', 'Icon', 'required');
+            $this->form_validation->set_rules('inStatus', 'Status', 'required');
+
+            $inTitle =  $this->input->post('inTitle');
+            $inMenu_id = $this->input->post('inMenu_id');
+            $inUrl =  $this->input->post('inUrl');
+            $inIcon =  $this->input->post('inIcon');
+            $inStatus =  $this->input->post('inStatus');
+
+            $this->db->set('title', $inTitle);
+            $this->db->set('menu_id', $inMenu_id);
+            $this->db->set('url', $inUrl);
+            $this->db->set('icon', $inIcon);
+            $this->db->set('status', $inStatus);
+            $this->db->where('id', $id);
+            $this->db->update('m_submenu');
+
+            $redirect = '/submenu';
         }
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Updated !</div>');
-        redirect('menu');
+        redirect('menu' . $redirect);
     }
 
     public function delete()
@@ -87,14 +110,6 @@ class Menu extends CI_Controller
         $this->form_validation->set_rules('inUrl', 'Url', 'required');
         $this->form_validation->set_rules('inIcon', 'Icon', 'required');
         $this->form_validation->set_rules('inStatus', 'Status', 'required');
-
-        $mode = $this->input->post("mode");
-
-        // if (isset($mode)) {
-        $data['mode'] = $mode;
-        // echo ('lalala' . $mode);
-        // die;
-        // }
 
         if ($this->form_validation->run() == false) {
             $this->load->view('templates/header', $data);

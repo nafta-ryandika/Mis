@@ -61,17 +61,6 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
-<?php
-// if ($mode == "edit") {
-// echo '<span id="txtKerjaId" style="display : none;">' . $inKerjaId . '</span>';
-// echo '<span id="txtKerjaName" style="display : none;">' . $inKerjaName . '</span>';
-// echo '<span id="txtKerjaPrice" style="display : none;">' . $inKerjaPrice . '</span>';
-// echo '<span id="txtKerjaSatuanId" style="display : none;">' . $inKerjaSatuanId . '</span>';
-
-echo ('lalala' . $mode);
-// }
-?>
-
 <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddlabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
