@@ -1,5 +1,9 @@
 $(document).ready(function() {
     $('#dataTable').DataTable();
+
+    $('#modalAdd').on('hidden.bs.modal', function () {
+        $("#inMenu").val('');
+    })
 });
 
 function getData(id,menu) {

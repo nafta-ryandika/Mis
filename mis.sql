@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Server version:               5.6.51-log - MySQL Community Server (GPL)
 -- Server OS:                    Win64
--- HeidiSQL Version:             12.6.0.6778
+-- HeidiSQL Version:             12.6.0.6765
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -27,32 +27,32 @@ CREATE TABLE IF NOT EXISTS `m_access` (
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.m_access: ~4 rows (approximately)
+-- Dumping data for table mis.m_access: ~3 rows (approximately)
 DELETE FROM `m_access`;
 INSERT INTO `m_access` (`id`, `role_id`, `menu_id`, `created_by`, `created_at`) VALUES
 	(1, 1, 1, 'Administrator', '2023-12-12 10:31:47'),
-	(2, 1, 2, 'Administrator', '2023-12-12 10:31:47'),
 	(3, 2, 2, 'Administrator', '2023-12-12 10:32:49'),
-	(4, 1, 3, 'Administrator', '2023-12-12 10:32:49');
+	(4, 1, 3, 'Administrator', '2023-12-12 10:32:49'),
+	(8, 1, 4, NULL, NULL),
+	(12, 1, 2, NULL, NULL);
 
 -- Dumping structure for table mis.m_menu
 CREATE TABLE IF NOT EXISTS `m_menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `menu` varchar(128) DEFAULT NULL,
   `created_by` varchar(256) DEFAULT NULL,
-  `created_at` datetime DEFAULT NULL,
+  `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table mis.m_menu: ~2 rows (approximately)
+-- Dumping data for table mis.m_menu: ~4 rows (approximately)
 DELETE FROM `m_menu`;
 INSERT INTO `m_menu` (`id`, `menu`, `created_by`, `created_at`) VALUES
 	(1, 'Administrator', 'Administrator', '2023-12-12 10:43:22'),
 	(2, 'User', 'Administrator', '2023-12-12 10:43:22'),
-	(3, 'Menu', 'Administrator', '2023-12-12 10:43:22'),
-	(4, 'test', NULL, NULL);
+	(3, 'Menu', 'Administrator', '2023-12-12 10:43:22');
 
 -- Dumping structure for table mis.m_role
 CREATE TABLE IF NOT EXISTS `m_role` (
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `m_submenu` (
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- Dumping data for table mis.m_submenu: ~7 rows (approximately)
 DELETE FROM `m_submenu`;
@@ -90,8 +90,24 @@ INSERT INTO `m_submenu` (`id`, `menu_id`, `title`, `url`, `icon`, `status`, `cre
 	(3, 2, 'Edit Profile', 'user/edit', 'fas fa-fw fa-user-edit', 1, 'Administrator', '2023-12-12 10:28:19'),
 	(4, 3, 'Menu Management', 'menu', 'fas fa-fw fa-folder', 1, 'Administrator', '2023-12-12 10:28:19'),
 	(5, 3, 'Submenu Management', 'menu/submenu', 'fas fa-fw fa-folder-open', 1, 'Administrator', '2023-12-12 10:28:19'),
-	(6, 1, 'test', 'coba/coba', 'fab fa-fw fa-youtube', 1, NULL, NULL),
-	(7, 1, 'Role', 'administrator/role', 'fas fa-fw fa-user-tie', 1, NULL, NULL);
+	(7, 1, 'Role', 'administrator/role', 'fas fa-fw fa-user-tie', 1, 'Administrator', '2023-12-12 10:28:19'),
+	(8, 2, 'Test', 'test', 'test', 1, 'Administrator', '2023-12-12 10:28:19');
+
+-- Dumping structure for table mis.m_token
+CREATE TABLE IF NOT EXISTS `m_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` varchar(16) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table mis.m_token: ~0 rows (approximately)
+DELETE FROM `m_token`;
+INSERT INTO `m_token` (`id`, `user_id`, `token`, `created_at`) VALUES
+	(4, 'coba', 'xyUjSmX+AEkwYRrFBdGl2C2r5vLgj06uzbZT2iOSKdU=', '2024-01-04 08:43:24'),
+	(5, 'coba', 'L8Ba28doMtle31D4CdTIIbdBao4/Qal2koZ8+GyhHzY=', '2024-01-04 08:45:58');
 
 -- Dumping structure for table mis.m_user
 CREATE TABLE IF NOT EXISTS `m_user` (
@@ -108,13 +124,14 @@ CREATE TABLE IF NOT EXISTS `m_user` (
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.m_user: ~2 rows (approximately)
+-- Dumping data for table mis.m_user: ~3 rows (approximately)
 DELETE FROM `m_user`;
 INSERT INTO `m_user` (`id`, `user_id`, `name`, `email`, `image`, `password`, `department`, `division`, `role_id`, `status`, `created_by`, `created_at`) VALUES
 	(1, 'admin', 'admin', 'sysdev@megamarinepride.com', 'default.png', '$2y$10$31nTmbo9IVv6NnjV7FHNHetkM4aIr18q8XRsRsI/y7qHXaNvtYKxK', '', '', 1, 1, 'administrator', '2023-11-29 07:41:59'),
-	(2, 'user', 'user', 'user@gmail.com', 'default.png', '$2y$10$mqX3iwzex/G/K2cEd5Yer.2DOAYn2AF0G1rFyW249xPh6dS5pX8Fq', '', '', 2, 1, 'administrator', '2023-12-08 05:19:30');
+	(2, 'user', 'user', 'user@gmail.com', 'default.png', '$2y$10$mqX3iwzex/G/K2cEd5Yer.2DOAYn2AF0G1rFyW249xPh6dS5pX8Fq', '', '', 2, 1, 'administrator', '2023-12-08 05:19:30'),
+	(6, 'coba', 'coba', 'coba@gmail.com', 'default.jpg', '$2y$10$nJtl8t6Ad8W1y69gos6Vc.Wpv8NIq3fxtoUExl.pqkwePuXBbXes2', '', '', 2, 1, 'administrator', '2024-01-03 07:28:55');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

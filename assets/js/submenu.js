@@ -1,5 +1,13 @@
 $(document).ready(function() {
     $('#dataTable').DataTable();
+
+    $('#modalAdd').on('hidden.bs.modal', function () {
+        $("#inTitle").val('');
+        $("#inMenu_id").val('');
+        $("#inUrl").val('');
+        $("#inIcon").val('');
+        $("#inStatus").val('');
+    })
 });
 
 function getData(id) {

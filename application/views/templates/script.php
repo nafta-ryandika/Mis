@@ -1,11 +1,8 @@
 <?php
 if ($title == 'Menu Management') {
-?>
-    <script type="text/javascript" src="<?= base_url('assets/js/') . 'menu.js'; ?>"></script>
-<?php
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'menu.js"></script>';
 } else if ($title == 'Submenu Management') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'submenu.js"></script>';
-?>
-
-<?php
+} else if ($title == 'Role Access') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role_access.js"></script>';
 }

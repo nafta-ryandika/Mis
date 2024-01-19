@@ -50,6 +50,7 @@ class Administrator extends CI_Controller
         $this->load->view('templates/topbar', $data);
         $this->load->view('administrator/role_access', $data);
         $this->load->view('templates/footer');
+        $this->load->view('templates/script', $data);
     }
 
     public function changeAccess()
