@@ -14,7 +14,7 @@
 
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-success mb-3" data-toggle="modal" data-target="#modalAdd">Add New</a>
+            <button class="btn btn-success btn-md mb-3" data-toggle="modal" data-target="#modalAdd"><i class="fa-solid fa-square-plus mr-2"></i>Add New</button>
 
             <table class="table table-hover" id="dataTable">
                 <thead>

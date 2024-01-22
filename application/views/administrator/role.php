@@ -10,9 +10,9 @@
             <?= form_error('inMenu', '<div class="alert alert-danger role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
 
-            <a href="" class="btn btn-success mb-3" data-toggle="modal" data-target="#modalAdd">Add New</a>
+            <button class="btn btn-success btn-md mb-3" data-toggle="modal" data-target="#modalAdd"><i class="fa-solid fa-square-plus mr-2"></i>Add New</button>
 
-            <table class="table table-hover">
+            <table class="table table-hover" id="dataTable">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -29,9 +29,9 @@
                             <th scope="row"><?= $i ?></th>
                             <td><?= $data_role['role']; ?></td>
                             <td>
-                                <a href="<?= base_url('administrator/roleaccess/') . $data_role['id'] ?>" class="badge badge-success">Access</a>
-                                <a href="" class="badge badge-warning">Edit</a>
-                                <a href="" class="badge badge-danger">Delete</a>
+                                <a class="btn btn-success" href="<?= base_url('administrator/roleaccess/') . $data_role['id'] ?>"><i class="fa-solid fa-square-xmark m-1"></i>Access</a>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_role['id']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
+                                <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=menu&id=' . $data_role['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
                             </td>
                         </tr>
                     <?php
