@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-lg">
 
-            <?= form_error('inMenu', '<div class="alert alert-danger role="alert">', '</div>'); ?>
+            <?= form_error('inRole', '<div class="alert alert-danger role="alert">', '</div>'); ?>
             <?= $this->session->flashdata('message'); ?>
 
             <button class="btn btn-success btn-md mb-3" data-toggle="modal" data-target="#modalAdd"><i class="fa-solid fa-square-plus mr-2"></i>Add New</button>
@@ -30,8 +30,8 @@
                             <td><?= $data_role['role']; ?></td>
                             <td>
                                 <a class="btn btn-success" href="<?= base_url('administrator/roleaccess/') . $data_role['id'] ?>"><i class="fa-solid fa-square-xmark m-1"></i>Access</a>
-                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_role['id']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
-                                <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=menu&id=' . $data_role['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
+                                <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData('<?= $data_role['id']; ?>','<?= $data_role['role']; ?>')"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
+                                <a class="btn btn-danger" href="<?= base_url('administrator/delete?') . 'delete=role&id=' . $data_role['id'] ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
                             </td>
                         </tr>
                     <?php

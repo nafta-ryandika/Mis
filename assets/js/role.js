@@ -8,5 +8,5 @@ $(document).ready(function() {
 
 function getData(id,role) {
     $("#inRole").val(role);
-    $('form').attr('action',  'role/update?'+'update=role&id=' + id);
+    $('form').attr('action',  'update?'+'update=role&id=' + id);
 }

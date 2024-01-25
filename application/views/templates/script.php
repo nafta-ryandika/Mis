@@ -5,4 +5,6 @@ if ($title == 'Menu Management') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'submenu.js"></script>';
 } else if ($title == 'Role Access') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role_access.js"></script>';
+} else if ($title == 'Role') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role.js"></script>';
 }

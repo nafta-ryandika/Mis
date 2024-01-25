@@ -28,11 +28,52 @@ class Administrator extends CI_Controller
 
         $data['role'] = $this->db->get('m_role')->result_array();
 
-        $this->load->view('templates/header', $data);
-        $this->load->view('templates/sidebar', $data);
-        $this->load->view('templates/topbar', $data);
-        $this->load->view('administrator/role', $data);
-        $this->load->view('templates/footer');
+        $this->form_validation->set_rules('inRole', 'Role', 'required');
+
+        if ($this->form_validation->run() == false) {
+            $this->load->view('templates/header', $data);
+            $this->load->view('templates/sidebar', $data);
+            $this->load->view('templates/topbar', $data);
+            $this->load->view('administrator/role', $data);
+            $this->load->view('templates/footer');
+            $this->load->view('templates/script', $data);
+        } else {
+            $this->db->insert('m_role', ['role' => $this->input->post('inRole'), 'created_by' => $this->session->userdata('user_id')]);
+            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Saved !</div>');
+            redirect('administrator/role');
+        }
+    }
+
+    public function update()
+    {
+        $update = $this->input->get('update');
+        $id = $this->input->get('id');
+        $redirect = '';
+
+        if ($update == 'role') {
+            $inRole = $this->input->post('inRole');
+
+            $this->db->set('role', $inRole);
+            $this->db->where('id', $id);
+            $this->db->update('m_role');
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Updated !</div>');
+        redirect('administrator/role' . $redirect);
+    }
+
+    public function delete()
+    {
+        $delete = $this->input->get('delete');
+        $id = $this->input->get('id');
+        $redirect = '';
+
+        if ($delete == 'role') {
+            $this->db->delete('m_role', ['id' => $id]);
+        }
+
+        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted !</div>');
+        redirect('administrator/role' . $redirect);
     }
 
     public function roleAccess($role_id)
