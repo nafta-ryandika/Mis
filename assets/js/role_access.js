@@ -14,7 +14,7 @@ $('.form-check-input').on('click', function() {
             role_id: role_id
         },
         success: function() {
-            document.location.href = "<?= base_url('administrator/roleAccess/') ?>" + role_id;
+            document.location.href = base_url + "administrator/roleAccess/" + role_id;
         }
     })
 });
