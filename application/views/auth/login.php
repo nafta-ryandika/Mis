@@ -13,8 +13,8 @@
                                 <div class="text-center">
                                     <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?= base_url('assets/'); ?>img/logo_mmp.png" alt="...">
                                 </div>
-                                <div class="text-center">
-                                    <b style="font-size: 32px;">Web</b><a style="font-size: 30px;"> Information System</a>
+                                <div class="text-center mb-3">
+                                    <b style="font-size: 30px;">Management</b><a style="font-size: 24px;"> Information System</a>
                                 </div>
                                 <?= $this->session->flashdata('message'); ?>
                                 <form class="user" method="post" action="<?= base_url('auth'); ?>">
