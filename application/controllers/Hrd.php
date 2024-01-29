@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Exit_permit extends CI_Controller
+class Hrd extends CI_Controller
 {
     public function __construct()
     {
