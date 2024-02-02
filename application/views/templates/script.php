@@ -1,10 +1,14 @@
 <?php
+$xyz = date('YmmddHis');
+
 if ($title == 'Menu Management') {
-    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'menu.js"></script>';
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'menu.js?version=' . $xyz . '"></script>';
 } else if ($title == 'Submenu Management') {
-    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'submenu.js"></script>';
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'submenu.js?version=' . $xyz . '"></script>';
 } else if ($title == 'Role Access') {
-    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role_access.js"></script>';
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role_access.js?version=' . $xyz . '"></script>';
 } else if ($title == 'Role') {
-    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role.js"></script>';
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'role.js?version=' . $xyz . '"></script>';
+} else if ($title == 'Exit Permit') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'exit_permit.js?version=' . $xyz . '"></script>';
 }

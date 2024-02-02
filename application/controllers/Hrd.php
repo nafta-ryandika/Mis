@@ -11,10 +11,8 @@ class Hrd extends CI_Controller
 
     public function index()
     {
-        $data['title'] = 'Menu Management';
+        $data['title'] = 'Exit Permit';
         $data['user'] = $this->db->get_where('m_user', ['user_id' => $this->session->userdata('user_id')])->row_array();
-
-        $data['menu'] = $this->db->get('m_menu')->result_array();
 
         $this->form_validation->set_rules('inMenu', 'Menu', 'required');
 
@@ -22,7 +20,7 @@ class Hrd extends CI_Controller
             $this->load->view('templates/header', $data);
             $this->load->view('templates/sidebar', $data);
             $this->load->view('templates/topbar', $data);
-            $this->load->view('menu/index', $data);
+            $this->load->view('exit_permit/index', $data);
             $this->load->view('templates/footer');
             $this->load->view('templates/script', $data);
         } else {
@@ -30,6 +28,49 @@ class Hrd extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Saved !</div>');
             redirect('menu');
         }
+    }
+
+    public function viewData()
+    {
+        $sql_exit_permit = "SELECT * ,
+                            (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity
+                            FROM 
+                            (
+                                SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark FROM t_exit_permit a WHERE 1
+                            )dt1
+                            LEFT JOIN
+                            (
+                                SELECT id, card, name, company_id, department_id, division_id, position_id FROM m_employee b WHERE 1
+                            )dt2
+                            ON dt1.employee_id = dt2.id
+                            LEFT JOIN 
+                            (
+                                SELECT id, company FROM m_company c WHERE 1 
+                            )dt3
+                            ON dt2.company_id = dt3.id 
+                            LEFT JOIN 
+                            (
+                                SELECT id, department FROM  m_department d WHERE 1
+                            )dt4
+                            ON dt2.department_id = dt4.id 
+                            LEFT JOIN 
+                            (
+                                SELECT id, division FROM m_division e WHERE 1 
+                            )dt5
+                            ON dt2.division_id = dt5.id
+                            LEFT JOIN 
+                            (
+                                SELECT id, `position` FROM m_position f WHERE 1
+                            )dt6
+                            ON dt2.position_id = dt6.id";
+        $data['exit_permit'] = $this->db->query($sql_exit_permit)->result_array();
+
+        $this->load->view('exit_permit/view_data', $data);
+    }
+
+    public function viewInput()
+    {
+        $this->load->view('exit_permit/view_input');
     }
 
     public function getData()
