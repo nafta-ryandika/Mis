@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `m_necessity` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table mis.m_necessity: ~5 rows (approximately)
+-- Dumping data for table mis.m_necessity: ~4 rows (approximately)
 DELETE FROM `m_necessity`;
 INSERT INTO `m_necessity` (`id`, `necessity`, `created_by`, `created_at`) VALUES
 	(1, 'Tugas untuk mengurus kepentingan perusahaan', 'administrator', '2024-01-30 11:27:27'),
@@ -297,7 +297,7 @@ CREATE TABLE IF NOT EXISTS `t_exit_permit` (
   KEY `necessity_id` (`necessity_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.t_exit_permit: ~1 rows (approximately)
+-- Dumping data for table mis.t_exit_permit: ~0 rows (approximately)
 DELETE FROM `t_exit_permit`;
 INSERT INTO `t_exit_permit` (`id`, `employee_id`, `date_in`, `time_in`, `date_out`, `time_out`, `necessity_id`, `remark`, `created_by`, `created_at`) VALUES
 	(1, 123456, '2024-01-31', '11:02:11', '2024-01-31', '12:00:00', 5, 'test', 'administrator', '2024-01-31 11:02:23');
