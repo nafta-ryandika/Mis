@@ -7,6 +7,7 @@ class Hrd extends CI_Controller
     {
         parent::__construct();
         checkLogin();
+        $this->load->model("Hrd_M");
     }
 
     public function index()
@@ -66,6 +67,13 @@ class Hrd extends CI_Controller
         $data['exit_permit'] = $this->db->query($sql_exit_permit)->result_array();
 
         $this->load->view('exit_permit/view_data', $data);
+    }
+
+    public function check()
+    {
+        $param = $this->input->post('param');
+        $obj = $this->input->post('obj');
+        $data['data'] = $this->Hrd_M->check($param, $obj);
     }
 
     public function viewInput()

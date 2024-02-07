@@ -7,7 +7,7 @@
     <div class="row content" id="contentArea">
         <div class="col-lg">
             <div class="content col-lg-4 offset-lg-4" id="inputArea">
-                <input type="text" name="inCardId" class="form-control" id="inCardId" placeholder="ID / ID Card" style="text-align: center;" autofocus>
+                <input type="text" name="inId" class="form-control" id="inId" placeholder="ID / ID Card" style="text-align: center;" autofocus>
             </div>
 
             <?= form_error('inMenu', '<div class="alert alert-danger role="alert">', '</div>'); ?>
