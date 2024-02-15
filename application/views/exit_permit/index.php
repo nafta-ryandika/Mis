@@ -38,7 +38,7 @@
 
 <!-- Modal -->
 <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddlabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalAddlabel">Add Menu</h5>
@@ -46,17 +46,56 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu') ?>" method="post">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="inMenu" name="inMenu" placeholder="Menu Name">
+            <div class="modal-body">
+                <div class="form-group row">
+                    <label for="inId" class="col-sm-3 col-form-label">ID</label>
+                    <div class="col-sm-3">
+                        <input type="text" class="form-control" id="inId">
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary btn-md col-2">Save</button>
+                <div class="form-group row">
+                    <label for="inName" class="col-sm-3 col-form-label">Name</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inName">
+                    </div>
                 </div>
-            </form>
+                <div class="form-group row">
+                    <label for="inDepartment" class="col-sm-3 col-form-label">Department</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inDepartment">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inDivision" class="col-sm-3 col-form-label">Division</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inDivision">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inPosition" class="col-sm-3 col-form-label">Position</label>
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="inPosition">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inNecessity" class="col-sm-3 col-form-label">Necessity</label>
+                    <div class="col-sm-9">
+                        <select class="form-control select2" style="width: 100%;" id="inNecessity">
+                            <option value="">Select</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inRemark" class="col-sm-3 col-form-label">Remark / Destination</label>
+                    <div class="col-sm-9">
+                        <textarea type="text" class="form-control" id="inRemark"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary btn-md col-2">Save</button>
+            </div>
         </div>
     </div>
 </div>

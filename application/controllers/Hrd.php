@@ -73,7 +73,20 @@ class Hrd extends CI_Controller
     {
         $param = $this->input->post('param');
         $obj = $this->input->post('obj');
-        $data['data'] = $this->Hrd_M->check($param, $obj);
+
+        $data = $this->Hrd_M->check($param, $obj);
+
+        echo (json_encode($data));
+    }
+
+    public function get()
+    {
+        $param = $this->input->post('param');
+        $obj = $this->input->post('obj');
+
+        $data = $this->Hrd_M->get($param, $obj);
+
+        echo (json_encode($data));
     }
 
     public function viewInput()

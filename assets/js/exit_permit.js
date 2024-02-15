@@ -10,6 +10,10 @@ $(document).ready(function() {
 			check('employeeId',$(this).val().trim());
 		}
 	});
+
+	$('#inNecessity').on('click', function(){
+		get("inNecessity","");
+	})
 });
 
 function viewData() {
@@ -40,7 +44,6 @@ function viewInput() {
 	});
 }
 
-
 function check(param,obj){
 	$.ajax({
 		type: "POST",
@@ -50,8 +53,40 @@ function check(param,obj){
 				obj: obj
 			},
 		dataType: "JSON",
-		success: function (response) {
-			
+		success: function (data) {
+			if (param == "employeeId")  {
+				if (data.res == 0) {
+					Swal.fire(
+						data.err
+					) 
+				} else if (data.res == 0) {
+					$('#modalAdd').modal('show'); 
+				}
+			}
+		}
+	});
+}
+
+function get(param,obj) { 
+	$.ajax({
+		type: "POST",
+		url: base_url+"hrd/get",
+		data: {
+			param: param,
+			obj: obj
+		},
+		dataType: "JSON",
+		success: function (data) {
+			if (param == "inNecessity") {
+				var html = '<option value="">Select</option>';
+				var i;
+
+				for (i=0; i<data.res.length; i++) {
+					html += '<option value="' + data.res[i].id + '">' + data.res[i].necessity + '</option>';
+				}
+
+				$('#inNecessity').html(html);
+			}
 		}
 	});
 }
