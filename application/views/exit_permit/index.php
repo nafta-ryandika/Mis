@@ -50,37 +50,37 @@
                 <div class="form-group row">
                     <label for="inId" class="col-sm-3 col-form-label">ID</label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control" id="inId">
+                        <input type="text" class="form-control" id="inId" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inName" class="col-sm-3 col-form-label">Name</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inName">
+                        <input type="text" class="form-control" id="inName" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inDepartment" class="col-sm-3 col-form-label">Department</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inDepartment">
+                        <input type="text" class="form-control" id="inDepartment" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inDivision" class="col-sm-3 col-form-label">Division</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inDivision">
+                        <input type="text" class="form-control" id="inDivision" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inPosition" class="col-sm-3 col-form-label">Position</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inPosition">
+                        <input type="text" class="form-control" id="inPosition" disabled>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="inNecessity" class="col-sm-3 col-form-label">Necessity</label>
                     <div class="col-sm-9">
-                        <select class="form-control select2" style="width: 100%;" id="inNecessity">
+                        <select class="form-control" style="width: 100%;" id="inNecessity">
                             <option value="">Select</option>
                         </select>
                     </div>
@@ -94,7 +94,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary btn-md col-2">Save</button>
+                <button type="submit" class="btn btn-primary btn-md col-2" id="btnSave">Save</button>
             </div>
         </div>
     </div>

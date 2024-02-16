@@ -5,15 +5,19 @@ $(document).ready(function() {
         $("#inMenu").val('');
     })
 
+	$('#modalAdd').on('shown.bs.modal', function() {
+		$(".modal-dialog .modal-content .modal-body #inNecessity").focus();
+	});
+
 	$('#inId').on('keypress',function(e){
 		if (e.which == 13) {
 			check('employeeId',$(this).val().trim());
 		}
 	});
 
-	$('#inNecessity').on('click', function(){
-		get("inNecessity","");
-	})
+	$("#btnSave").on('click',function(){
+		save('add','exitPermit');
+	});
 });
 
 function viewData() {
@@ -37,14 +41,12 @@ function viewInput() {
 		cache: false,
 		success: function (data) {
 			$('#contentArea').html(data);
-			// $(function () {
-			// 	// $("#dataTable").DataTable();
-			// })
 		}
 	});
 }
 
 function check(param,obj){
+	var modal = "";
 	$.ajax({
 		type: "POST",
 		url: base_url+"hrd/check",
@@ -52,22 +54,38 @@ function check(param,obj){
 				param: param,
 				obj: obj
 			},
+		cache: false,
 		dataType: "JSON",
+		async: false,
 		success: function (data) {
 			if (param == "employeeId")  {
 				if (data.res == 0) {
 					Swal.fire(
 						data.err
 					) 
-				} else if (data.res == 0) {
-					$('#modalAdd').modal('show'); 
+				} else if (data.res == 1) {
+						$(".modal-dialog .modal-content .modal-body #inId").val(obj);
+						$(".modal-dialog .modal-content .modal-body #inName").val(data.name);
+						$(".modal-dialog .modal-content .modal-body #inDepartment").val(data.department);
+						$(".modal-dialog .modal-content .modal-body #inDivision").val(data.division);
+						$(".modal-dialog .modal-content .modal-body #inPosition").val(data.position);
+						modal = data.res;
 				}
 			}
 		}
+	}).done(function(){
+		if (modal == 1) {
+			$('#modalAdd').modal('show');
+			get("inNecessity","");
+			// $(".modal-dialog .modal-content .modal-body #inNecessity").focus();
+		}
+
+		$("#inId").val("");
 	});
 }
 
 function get(param,obj) { 
+	console.log('test');
 	$.ajax({
 		type: "POST",
 		url: base_url+"hrd/get",
@@ -75,6 +93,7 @@ function get(param,obj) {
 			param: param,
 			obj: obj
 		},
+		cache: false,
 		dataType: "JSON",
 		success: function (data) {
 			if (param == "inNecessity") {
@@ -89,4 +108,29 @@ function get(param,obj) {
 			}
 		}
 	});
+}
+
+function save(param, obj) {
+	if (param == 'add') {
+		var inId = $(".modal-dialog .modal-content .modal-body #inId").val();
+		var inNecessity = $(".modal-dialog .modal-content .modal-body #inNecessity").val();
+		var inRemark = $(".modal-dialog .modal-content .modal-body #inRemark").val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url+"hrd/save",
+			data: {
+				param: param,
+				obj: obj,
+				inId: inId,
+				inNecessity: inNecessity,
+				inRemark: inRemark
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+				console.log(data.res);
+			}
+		})
+	}
 }

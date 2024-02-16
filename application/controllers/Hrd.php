@@ -89,6 +89,24 @@ class Hrd extends CI_Controller
         echo (json_encode($data));
     }
 
+    public function save()
+    {
+        $param = $this->input->post('param');
+        $obj = $this->input->post('obj');
+
+        if ($param == 'add') {
+            if ($obj == 'exitPermit') {
+                $inId = $this->input->post('inId');
+                $inNecessity = $this->input->post('inNecessity');
+                $inRemark = $this->input->post('inRemark');
+
+                $data = $this->Hrd_M->save($param, $obj, $inId, $inNecessity, $inRemark);
+
+                echo (json_encode($data));
+            }
+        }
+    }
+
     public function viewInput()
     {
         $this->load->view('exit_permit/view_input');
