@@ -285,22 +285,31 @@ CREATE TABLE IF NOT EXISTS `t_exit_permit` (
   `date_out` date DEFAULT NULL,
   `time_out` time DEFAULT NULL,
   `necessity_id` int(16) DEFAULT NULL,
-  `remark` varchar(256) DEFAULT NULL,
+  `remark` text,
+  `status` tinyint(4) DEFAULT '0',
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+  `log_by` varchar(256) DEFAULT NULL,
+  `log_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `employee_id` (`employee_id`),
   KEY `date_in` (`date_in`),
   KEY `time_in` (`time_in`),
   KEY `date_out` (`date_out`),
   KEY `time_out` (`time_out`),
-  KEY `necessity_id` (`necessity_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  KEY `necessity_id` (`necessity_id`),
+  KEY `status` (`status`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.t_exit_permit: ~0 rows (approximately)
+-- Dumping data for table mis.t_exit_permit: ~6 rows (approximately)
 DELETE FROM `t_exit_permit`;
-INSERT INTO `t_exit_permit` (`id`, `employee_id`, `date_in`, `time_in`, `date_out`, `time_out`, `necessity_id`, `remark`, `created_by`, `created_at`) VALUES
-	(1, 123456, '2024-01-31', '11:02:11', '2024-01-31', '12:00:00', 5, 'test', 'administrator', '2024-01-31 11:02:23');
+INSERT INTO `t_exit_permit` (`id`, `employee_id`, `date_in`, `time_in`, `date_out`, `time_out`, `necessity_id`, `remark`, `status`, `created_by`, `created_at`, `log_by`, `log_at`) VALUES
+	(1, 123456, '2024-01-31', '11:02:11', '2024-01-31', '12:00:00', 5, 'test', 1, 'administrator', '2024-02-09 14:26:59', NULL, NULL),
+	(14, 123456, '2024-02-21', '11:08:28', NULL, NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 0, 'admin', '2024-02-21 11:08:28', NULL, NULL),
+	(15, 123456, '2024-02-23', '14:15:55', '2024-02-23', '14:36:19', 1, 'test', 1, 'admin', '2024-02-23 14:15:55', 'admin', '2024-02-23 14:36:19'),
+	(16, 123456, '2024-02-23', '14:37:49', '2024-02-23', '14:38:05', 1, 'test', 1, 'admin', '2024-02-23 14:37:49', 'admin', '2024-02-23 14:38:05'),
+	(17, 123456, '2024-02-23', '14:38:18', '2024-02-23', '14:38:29', 1, 'test', 1, 'admin', '2024-02-23 14:38:18', 'admin', '2024-02-23 14:38:29'),
+	(19, 123456, '2024-02-23', '14:50:20', NULL, NULL, 1, 'test', 3, 'admin', '2024-02-23 14:50:20', NULL, NULL);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

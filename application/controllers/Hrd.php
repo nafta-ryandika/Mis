@@ -101,10 +101,20 @@ class Hrd extends CI_Controller
                 $inRemark = $this->input->post('inRemark');
 
                 $data = $this->Hrd_M->save($param, $obj, $inId, $inNecessity, $inRemark);
-
-                echo (json_encode($data));
             }
+        } else if ($param == 'update') {
+            if ($obj == 'exitPermit') {
+                $inId = $this->input->post('inId');
+
+                $data = $this->Hrd_M->save($param, $obj, $inId, "", "", "");
+            }
+        } else if ($param == 'new') {
+            $inId = $this->input->post('inId');
+
+            $data = $this->Hrd_M->save($param, $obj, $inId, "", "", "");
         }
+
+        echo (json_encode($data));
     }
 
     public function viewInput()

@@ -18,6 +18,14 @@ $(document).ready(function() {
 	$("#btnSave").on('click',function(){
 		save('add','exitPermit');
 	});
+
+	$("#modalUpdate .modal-dialog .modal-content .modal-footer #btnSave").on('click',function(){
+		save('update','exitPermit');
+	});
+	
+	$("#modalUpdate .modal-dialog .modal-content .modal-footer #btnNew").on('click',function(){
+		save('new','exitPermit');
+	});
 });
 
 function viewData() {
@@ -47,6 +55,8 @@ function viewInput() {
 
 function check(param,obj){
 	var modal = "";
+	var necessity_id = "";
+
 	$.ajax({
 		type: "POST",
 		url: base_url+"hrd/check",
@@ -64,12 +74,25 @@ function check(param,obj){
 						data.err
 					) 
 				} else if (data.res == 1) {
-						$(".modal-dialog .modal-content .modal-body #inId").val(obj);
-						$(".modal-dialog .modal-content .modal-body #inName").val(data.name);
-						$(".modal-dialog .modal-content .modal-body #inDepartment").val(data.department);
-						$(".modal-dialog .modal-content .modal-body #inDivision").val(data.division);
-						$(".modal-dialog .modal-content .modal-body #inPosition").val(data.position);
+						$("#modalAdd .modal-dialog .modal-content .modal-body #inId").val(obj);
+						$("#modalAdd .modal-dialog .modal-content .modal-body #inName").val(data.name);
+						$("#modalAdd .modal-dialog .modal-content .modal-body #inDepartment").val(data.department);
+						$("#modalAdd .modal-dialog .modal-content .modal-body #inDivision").val(data.division);
+						$("#modalAdd .modal-dialog .modal-content .modal-body #inPosition").val(data.position);
 						modal = data.res;
+				}
+				else if (data.res == 2) {
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inTransaction_id").val(data.transaction_id);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inId").text(obj);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inName").text(data.name);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDepartment").text(data.department);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDivision").text(data.division);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inPosition").text(data.position);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDate_in").text(data.date_in);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inTime_in").text(data.time_in);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inNecessity").text(data.necessity_id);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inRemark").text(data.remark);
+					modal = data.res;
 				}
 			}
 		}
@@ -77,7 +100,8 @@ function check(param,obj){
 		if (modal == 1) {
 			$('#modalAdd').modal('show');
 			get("inNecessity","");
-			// $(".modal-dialog .modal-content .modal-body #inNecessity").focus();
+		} else if (modal == 2) {
+			$('#modalUpdate').modal('show');
 		}
 
 		$("#inId").val("");
@@ -85,7 +109,6 @@ function check(param,obj){
 }
 
 function get(param,obj) { 
-	console.log('test');
 	$.ajax({
 		type: "POST",
 		url: base_url+"hrd/get",
@@ -129,7 +152,92 @@ function save(param, obj) {
 			cache: false,
 			dataType: "JSON",
 			success: function (data) {
-				console.log(data.res);
+				if (data.res == "success") {
+					Swal.fire({
+						title: "Data Saved!",
+						icon: "success",
+						timer: 1000
+					}).then(function () {
+						$('#modalAdd').modal('toggle');
+						viewData();
+						$("#inId").focus();
+					});
+				}
+				// console.log(data.res);
+			}
+		})
+	} else if (param == 'update') {
+		var inId = $("#modalUpdate .modal-dialog .modal-content .modal-body #inTransaction_id").val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url+"hrd/save",
+			data: {
+				param: param,
+				obj: obj,
+				inId: inId
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+				if (data.res == "success") {
+					Swal.fire({
+						title: "Data Saved!",
+						icon: "success",
+						timer: 1000
+					}).then(function () {
+						$('#modalUpdate').modal('toggle');
+						viewData();
+						$("#inId").focus();
+					});
+				}
+				else {
+					Swal.fire({
+						title: "Data Error!",
+						text: data.res,
+						icon: "error"
+					}).then(function () {
+						$('#modalUpdate').modal('toggle');
+						viewData();
+						$("#inId").focus();
+					});
+				}
+				// console.log(data.res);
+			}
+		})
+	} else if (param == 'new') {
+		var inId = $("#modalUpdate .modal-dialog .modal-content .modal-body #inTransaction_id").val();
+
+		$.ajax({
+			type: "POST",
+			url: base_url+"hrd/save",
+			data: {
+				param: param,
+				obj: obj,
+				inId: inId
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+				if (data.res == "success") {
+					Swal.fire({
+						title: "Data Saved!",
+						icon: "success",
+						timer: 1000
+					}).then(function () {
+						$('#modalUpdate').modal('toggle');
+						viewData();
+						$("#inId").focus();
+					});
+				}
+				else {
+					Swal.fire({
+						title: "Data Error!",
+						text: data.res,
+						icon: "error"
+					})
+				}
+				// console.log(data.res);
 			}
 		})
 	}
