@@ -2,7 +2,8 @@ $(document).ready(function() {
     viewData();
 
     $('#modalAdd').on('hidden.bs.modal', function () {
-        $("#inMenu").val('');
+        $("#inNecessity").val('');
+        $("#inRemark").val('');
     })
 
 	$('#modalAdd').on('shown.bs.modal', function() {
@@ -56,6 +57,7 @@ function viewInput() {
 function check(param,obj){
 	var modal = "";
 	var necessity_id = "";
+	var objx = "";
 
 	$.ajax({
 		type: "POST",
@@ -90,9 +92,52 @@ function check(param,obj){
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inPosition").text(data.position);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDate_in").text(data.date_in);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inTime_in").text(data.time_in);
-					$("#modalUpdate .modal-dialog .modal-content .modal-body #inNecessity").text(data.necessity_id);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inNecessity").text(data.necessity);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inRemark").text(data.remark);
 					modal = data.res;
+				}
+			}
+			else {
+				objx = obj.split("|");
+
+				if (objx[0] == "exitPermit") {
+					if (objx[1] == "detail") {
+						if (data.res == 3) {
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inId").text(data.employee_id);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inName").text(data.name);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inDepartment").text(data.department);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inDivision").text(data.division);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inPosition").text(data.position);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inDate_in").text(data.date_in);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inTime_in").text(data.time_in);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inDate_out").text(data.date_out);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inTime_out").text(data.time_out);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inNecessity").text(data.necessity);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inRemark").text(data.remark);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inCreated_by").text(data.created_by);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inCreated_at").text(data.created_at);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inLog_by").text(data.log_by);
+							$("#modalDetail .modal-dialog .modal-content .modal-body #inLog_at").text(data.log_at);
+
+							modal = data.res;
+						}
+					}
+					else if (objx[1] == "edit") {
+						if (data.res == 4) {
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inTransaction_id").val(data.transaction_id);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inId").val(data.employee_id);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inName").val(data.name);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inDepartment").val(data.department);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inDivision").val(data.division);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inPosition").val(data.position);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inDate_in").val(data.date_in);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inTime_in").val(data.time_in);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inNecessity").val(data.necessity_id);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inRemark").val(data.remark);
+							modal = data.res;
+							necessity_id = data.necessity_id;
+						}
+					}
 				}
 			}
 		}
@@ -102,6 +147,11 @@ function check(param,obj){
 			get("inNecessity","");
 		} else if (modal == 2) {
 			$('#modalUpdate').modal('show');
+		} else if (modal == 3) {
+			$('#modalDetail').modal('show');
+		} else if (modal == 4) {
+			$('#modalAdd').modal('show');
+			get("inNecessity",necessity_id);
 		}
 
 		$("#inId").val("");
@@ -124,7 +174,12 @@ function get(param,obj) {
 				var i;
 
 				for (i=0; i<data.res.length; i++) {
-					html += '<option value="' + data.res[i].id + '">' + data.res[i].necessity + '</option>';
+					if (obj.trim() != "" && obj == data.res[i].id) {
+						html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].necessity + '</option>';	
+					}
+					else {
+						html += '<option value="' + data.res[i].id + '">' + data.res[i].necessity + '</option>';
+					}
 				}
 
 				$('#inNecessity').html(html);
@@ -138,6 +193,7 @@ function save(param, obj) {
 		var inId = $(".modal-dialog .modal-content .modal-body #inId").val();
 		var inNecessity = $(".modal-dialog .modal-content .modal-body #inNecessity").val();
 		var inRemark = $(".modal-dialog .modal-content .modal-body #inRemark").val();
+		var inTransaction_id = $(".modal-dialog .modal-content .modal-body #inTransaction_id").val();
 
 		$.ajax({
 			type: "POST",
@@ -147,7 +203,8 @@ function save(param, obj) {
 				obj: obj,
 				inId: inId,
 				inNecessity: inNecessity,
-				inRemark: inRemark
+				inRemark: inRemark,
+				inTransaction_id: inTransaction_id
 			},
 			cache: false,
 			dataType: "JSON",
@@ -207,6 +264,7 @@ function save(param, obj) {
 		})
 	} else if (param == 'new') {
 		var inId = $("#modalUpdate .modal-dialog .modal-content .modal-body #inTransaction_id").val();
+		var employeeId = $("#modalUpdate .modal-dialog .modal-content .modal-body #inId").text();
 
 		$.ajax({
 			type: "POST",
@@ -220,15 +278,8 @@ function save(param, obj) {
 			dataType: "JSON",
 			success: function (data) {
 				if (data.res == "success") {
-					Swal.fire({
-						title: "Data Saved!",
-						icon: "success",
-						timer: 1000
-					}).then(function () {
 						$('#modalUpdate').modal('toggle');
-						viewData();
-						$("#inId").focus();
-					});
+						check('employeeId',employeeId);
 				}
 				else {
 					Swal.fire({
@@ -241,4 +292,45 @@ function save(param, obj) {
 			}
 		})
 	}
+}
+
+function remove(param,obj){
+	Swal.fire({
+		title: "Delete Data ?",
+		icon: "warning",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33"
+	}).then((res) => {
+		if (res.isConfirmed) {
+			$.ajax({
+				type: "POST",
+				url: base_url+"hrd/remove",
+				data: {
+					param: param,
+					obj: obj
+				},
+				cache: false,
+				dataType: "JSON",
+				success: function (data) {
+					if (data.res == "success") {
+						Swal.fire({
+							title: "Data Deleted !",
+							icon: "success"
+						}).then(function () {
+							viewData();
+							$("#inId").focus();
+						});;
+					}
+					else {
+						Swal.fire({
+							title: "Data Error!",
+							text: data.res,
+							icon: "error"
+						})
+					}
+				}
+			})
+		}
+	  });
 }

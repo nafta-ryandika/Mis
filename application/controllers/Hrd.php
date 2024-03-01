@@ -33,15 +33,22 @@ class Hrd extends CI_Controller
 
     public function viewData()
     {
-        $sql_exit_permit = "SELECT * ,
-                            (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity
+        $sql_exit_permit = "SELECT * , 
+                            dt1.id AS transaction_id,
+                            (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
+                            DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
+                            DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out
                             FROM 
                             (
-                                SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark FROM t_exit_permit a WHERE 1
+                                SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark, created_at, log_at 
+                                FROM t_exit_permit a 
+                                WHERE 1
                             )dt1
                             LEFT JOIN
                             (
-                                SELECT id, card, name, company_id, department_id, division_id, position_id FROM m_employee b WHERE 1
+                                SELECT id, card, name, company_id, department_id, division_id, position_id 
+                                FROM m_employee b 
+                                WHERE 1
                             )dt2
                             ON dt1.employee_id = dt2.id
                             LEFT JOIN 
@@ -63,7 +70,8 @@ class Hrd extends CI_Controller
                             (
                                 SELECT id, `position` FROM m_position f WHERE 1
                             )dt6
-                            ON dt2.position_id = dt6.id";
+                            ON dt2.position_id = dt6.id 
+                            ORDER BY created_at DESC, log_at DESC";
         $data['exit_permit'] = $this->db->query($sql_exit_permit)->result_array();
 
         $this->load->view('exit_permit/view_data', $data);
@@ -99,8 +107,9 @@ class Hrd extends CI_Controller
                 $inId = $this->input->post('inId');
                 $inNecessity = $this->input->post('inNecessity');
                 $inRemark = $this->input->post('inRemark');
+                $inTransaction_id = $this->input->post('inTransaction_id');
 
-                $data = $this->Hrd_M->save($param, $obj, $inId, $inNecessity, $inRemark);
+                $data = $this->Hrd_M->save($param, $obj, $inId, $inNecessity, $inRemark, $inTransaction_id);
             }
         } else if ($param == 'update') {
             if ($obj == 'exitPermit') {
@@ -113,6 +122,16 @@ class Hrd extends CI_Controller
 
             $data = $this->Hrd_M->save($param, $obj, $inId, "", "", "");
         }
+
+        echo (json_encode($data));
+    }
+
+    public function remove()
+    {
+        $param = $this->input->post('param');
+        $obj = $this->input->post('obj');
+
+        $data = $this->Hrd_M->remove($param, $obj);
 
         echo (json_encode($data));
     }

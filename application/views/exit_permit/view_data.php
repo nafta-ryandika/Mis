@@ -37,8 +37,9 @@
                 <td><?= $data_exit_permit['necessity']; ?></td>
                 <td><?= $data_exit_permit['remark']; ?></td>
                 <td>
-                    <a class="btn btn-warning" data-toggle="modal" data-target="#modalAdd" onclick="getData()"><i class="fa-solid fa-pen-to-square m-1"></i><text class="col-md">Edit</text></a>
-                    <a class="btn btn-danger" href="<?= base_url('menu/delete?') . 'delete=menu&id=' ?>" onclick="return confirm('Delete data ?')"><i class="fa-solid fa-square-xmark m-1"></i>Delete</a>
+                    <a class="btn btn-info m-1" id="btnDetail" title="Detail" onclick="check('<?= $data_exit_permit['transaction_id']; ?>','exitPermit|detail')"><i class="fas fa-fw fa-solid fa-magnifying-glass m-1"></i></a>
+                    <a class="btn btn-warning m-1" id="btnEdit" title="Edit" onclick="check('<?= $data_exit_permit['transaction_id']; ?>','exitPermit|edit')"><i class="fas fa-fw fa-solid fa-pen-to-square m-1"></i></a>
+                    <a class="btn btn-danger m-1" id="btnDelete" title="Delete" onclick="remove('<?= $data_exit_permit['transaction_id']; ?>','exitPermit')"><i class="fas fa-fw fa-solid fa-square-xmark m-1"></i></a>
                 </td>
             </tr>
         <?php
