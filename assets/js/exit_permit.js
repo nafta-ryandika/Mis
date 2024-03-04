@@ -37,7 +37,9 @@ function viewData() {
 		success: function (data) {
 			$('#tableArea').html(data);
 			$(function () {
-				$("#dataTable").DataTable();
+				$("#dataTable").DataTable({
+					columnDefs:[{targets:[7,8,9,10], class:"nowrap-column"}]
+				});
 			})
 		}
 	});

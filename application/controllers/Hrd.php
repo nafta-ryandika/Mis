@@ -37,10 +37,11 @@ class Hrd extends CI_Controller
                             dt1.id AS transaction_id,
                             (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
                             DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
-                            DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out
+                            DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,
+                            IF(dt1.status = 0, 'Pending', IF(dt1.status = 1, 'Complete', IF(dt1.status = 2, 'Uncomplete','Unknown'))) AS status_name
                             FROM 
                             (
-                                SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark, created_at, log_at 
+                                SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark, status,created_at, log_at 
                                 FROM t_exit_permit a 
                                 WHERE 1
                             )dt1
