@@ -39,7 +39,8 @@ class Auth extends CI_Controller
 				if (password_verify($password, $user['password'])) {
 					$data = [
 						'user_id' => $user['user_id'],
-						'role_id' => $user['role_id']
+						'role_id' => $user['role_id'],
+						'name' => $user['name']
 					];
 
 					$this->session->set_userdata($data);

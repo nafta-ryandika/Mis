@@ -15,20 +15,12 @@ class Hrd extends CI_Controller
         $data['title'] = 'Exit Permit';
         $data['user'] = $this->db->get_where('m_user', ['user_id' => $this->session->userdata('user_id')])->row_array();
 
-        $this->form_validation->set_rules('inMenu', 'Menu', 'required');
-
-        if ($this->form_validation->run() == false) {
-            $this->load->view('templates/header', $data);
-            $this->load->view('templates/sidebar', $data);
-            $this->load->view('templates/topbar', $data);
-            $this->load->view('exit_permit/index', $data);
-            $this->load->view('templates/footer');
-            $this->load->view('templates/script', $data);
-        } else {
-            $this->db->insert('m_menu', ['menu' => $this->input->post('inMenu'), 'created_by' => $this->session->userdata('user_id')]);
-            $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Saved !</div>');
-            redirect('menu');
-        }
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('exit_permit/index', $data);
+        $this->load->view('templates/footer');
+        $this->load->view('templates/script', $data);
     }
 
     public function viewData()
