@@ -22,7 +22,7 @@
                                     <div class="col-8 m-2">
                                         <div class="form-group row">
                                             <div class="col-3">
-                                                <select class="form-control inSearchcolumn" style="width: 100%;">
+                                                <select class="form-control inSearchcolumn" style="width: 100%;" onchange="get('searchColumn',this,'')">
                                                     <option value="">Parameter</option>
                                                     <option value="dt1.employee_id">Employee ID</option>
                                                     <option value="dt2.name">Name</option>
@@ -46,13 +46,13 @@
                                                 <input type="text" class="form-control inSearchinput">
                                             </div>
                                             <div class="col-2">
-                                                <a class="btn btn-success" id="btnDetail" title="Detail" onclick=""><i class="fas fa-fw fa-solid fa-square-plus m-1"></i></a>
+                                                <a class="btn btn-success" id="btnAdd" title="Add" onclick="add('parameter',this)"><i class="fas fa-fw fa-solid fa-square-plus m-1"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-3 m-2">
                                         <div class="form-group float-right row">
-                                            <a class="btn btn-info col-6" id="btnDetail" title="Detail" onclick="viewData()"><i class="fas fa-fw fa-solid fa-magnifying-glass m-1"></i>Search</a>
+                                            <a class="btn btn-info col-6" id="btnSearch" title="Search" onclick="viewData()"><i class="fas fa-fw fa-solid fa-magnifying-glass m-1"></i>Search</a>
                                             <div class="dropdown ml-2 col-1">
                                                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-fw fa-solid fa-file-export m-1"></i>Export
