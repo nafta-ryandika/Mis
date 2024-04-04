@@ -13,4 +13,6 @@ if ($title == 'Menu Management') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'exit_permit.js?version=' . $xyz . '"></script>';
 } else if ($title == 'Report Exit Permit') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'report_exit_permit.js?version=' . $xyz . '"></script>';
+} else if ($title == 'User') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'user.js?version=' . $xyz . '"></script>';
 }

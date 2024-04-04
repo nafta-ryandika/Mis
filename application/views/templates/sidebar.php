@@ -18,7 +18,7 @@
     $query_menu = "SELECT a.id, a.menu 
                 FROM m_menu a JOIN m_access b
                 ON a.id = b.menu_id
-                WHERE b.role_id = $role_id 
+                WHERE b.role_id = $role_id AND a.status = 1
                 ORDER BY b.menu_id ASC";
 
     $menu = $this->db->query($query_menu)->result_array();
