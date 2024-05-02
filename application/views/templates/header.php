@@ -20,10 +20,21 @@
 
     <link href="<?= base_url('assets/'); ?>vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
+    <!-- Select2 -->
+    <link rel="stylesheet" href="<?php echo base_url('assets/'); ?>vendor/select2/css/select2.min.css">
+    <link rel="stylesheet" href="<?php echo base_url('assets/'); ?>vendor/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+
     <link rel="icon" type="image/png" href="<?php echo base_url(); ?>assets/img/shrimp-crab.png">
     <script>
         var base_url = "<?php echo base_url(); ?>";
     </script>
+
+    <style>
+        .error {
+            color: red;
+            font-size: 16px;
+        }
+    </style>
 </head>
 
 <body id="page-top">

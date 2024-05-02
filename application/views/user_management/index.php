@@ -103,7 +103,7 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
-<div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="modalAddlabel" aria-hidden="true">
+<div class="modal fade" id="modalAdd" aria-labelledby="modalAddlabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -113,63 +113,81 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group row">
-                    <label for="inId" class="col-sm-3 col-form-label">ID</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" id="inId">
+                <form id="formAdd">
+                    <input type="hidden" class="form-control" id="inMode">
+                    <div class="form-group row">
+                        <label for="inId" class="col-sm-3 col-form-label">ID</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" id="inId" name="inId">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inName" class="col-sm-3 col-form-label">Name</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control" id="inName">
+                    <div class="form-group row">
+                        <label for="inName" class="col-sm-3 col-form-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="inName" name="inName">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inDepartment" class="col-sm-3 col-form-label">Department</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" style="width: 100%;" id="inDepartment">
-                            <option value="">Select</option>
-                        </select>
+                    <div class="form-group row">
+                        <label for="inDepartment" class="col-sm-3 col-form-label">Department</label>
+                        <div class="col-sm-9">
+                            <select class="form-control select2" style="width: 100%;" id="inDepartment" name="inDepartment">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inDivision" class="col-sm-3 col-form-label">Division</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" style="width: 100%;" id="inDivision">
-                            <option value="">Select</option>
-                        </select>
+                    <div class="form-group row">
+                        <label for="inDivision" class="col-sm-3 col-form-label">Division</label>
+                        <div class="col-sm-9">
+                            <select class="form-control select2" style="width: 100%;" id="inDivision" name="inDivision">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inRole" class="col-sm-3 col-form-label">Role</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" style="width: 100%;" id="inRole">
-                            <option value="">Select</option>
-                        </select>
+                    <div class="form-group row">
+                        <label for="inRole" class="col-sm-3 col-form-label">Role</label>
+                        <div class="col-sm-9">
+                            <select class="form-control" style="width: 100%;" id="inRole" name="inRole">
+                                <option value="">Select</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inEmail" class="col-sm-3 col-form-label">Email</label>
-                    <div class="col-sm-9">
-                        <input type="email" class="form-control" id="inEmail">
+                    <div class="form-group row">
+                        <label for="inEmail" class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" class="form-control" id="inEmail" name="inEmail">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inImage" class="col-sm-3 col-form-label">Image</label>
-                    <div class="col-sm-9">
-                        <input type="file" class="form-control" id="inImage">
+                    <div class="form-group row">
+                        <label for="inImage" class="col-sm-3 col-form-label">Image</label>
+                        <div class="col-sm-9">
+                            <div class=" custom-file">
+                                <input type="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label for="inStatus" class="col-sm-3 col-form-label">Status</label>
-                    <div class="col-sm-9">
-                        <select class="form-control" style="width: 100%;" id="inStatus">
-                            <option value="1">Active</option>
-                            <option value="0">Not Active</option>
-                        </select>
+                    <div class="form-group row">
+                        <label for="inPassword" class="col-sm-3 col-form-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inPassword" name="inPassword">
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group row">
+                        <label for="inRepeatpassword" class="col-sm-3 col-form-label">Repeat Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" id="inRepeatPassword" name="inRepeatPassword">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inStatus" class="col-sm-3 col-form-label">Status</label>
+                        <div class="col-sm-3">
+                            <select class="form-control" style="width: 100%;" id="inStatus">
+                                <option value="1">Active</option>
+                                <option value="0">Not Active</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>

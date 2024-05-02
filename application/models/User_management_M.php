@@ -199,7 +199,25 @@ class User_management_M extends CI_Model
         $data = array();
 
         if ($param == "inDepartment") {
-            $query = "SELECT id, department FROM m_department";
+            $query = "SELECT id, department FROM m_department ORDER BY department";
+            $row = $this->db->query($query)->num_rows();
+
+            if ($row > 0) {
+                $data["res"] = $this->db->query($query)->result_array();
+            } else {
+                return FALSE;
+            }
+        } else if ($param == "inDivision") {
+            $query = "SELECT id, division FROM m_division WHERE department_id = '" . $obj . "' ORDER BY division";
+            $row = $this->db->query($query)->num_rows();
+
+            if ($row > 0) {
+                $data["res"] = $this->db->query($query)->result_array();
+            } else {
+                return FALSE;
+            }
+        } else if ($param == "inRole") {
+            $query = "SELECT id, role FROM m_role";
             $row = $this->db->query($query)->num_rows();
 
             if ($row > 0) {

@@ -1,11 +1,55 @@
 $(document).ready(function() {
+	get("inDepartment","inDepartment","");
+	get("inRole","inRole","");
+
+	$('#inDepartment').on('change',function(){
+		var inDepartment = $('#inDepartment').val().trim();
+		$(this).valid();
+		get("inDivision",inDepartment,"");
+	})
+
     viewData();
 
-	$("#inDepartment").on("click",function(){
-		get("inDepartment","","");
-		console.log("test");
+	$('#formAdd').validate({
+		rules: {
+            inId: {
+                required: true
+            },
+			inName: {
+				required: true
+			},
+			// inDepartment: {
+			// 	required: true
+			// },
+			// inDivision: {
+			// 	required: true
+			// },
+			inRole: {
+				required: true
+			},
+			inEmail: {
+				required: true
+			},
+			inPassword: {
+				required: true
+			},
+			inRepeatPassword: {
+				required: true
+			},
+        }
+	});
+
+	$('#modalAdd #btnSave').on('click',function(){
+		$('#formAdd').valid();
 	})
 });
+
+$(function () {
+    $('#inDepartment').select2({
+		dropdownParent: $('#modalAdd'),
+		theme: 'bootstrap4'
+	})
+})
 
 function viewData() {
 	var rowTable = $('#tableSearch tr').length;
@@ -145,7 +189,7 @@ function get(param,obj,callBack) {
 			} else {
 				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','text');
 			}
-		} else if (param = "inDepartment") {
+		} else if (param == "inDepartment") {
 			$.ajax({
 				type: "POST",
 				url: base_url+"user_management/get",
@@ -161,14 +205,78 @@ function get(param,obj,callBack) {
 		
 						for (i=0; i<data.res.length; i++) {
 							if (obj.trim() != "" && obj == data.res[i].id) {
-								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].necessity + '</option>';	
+								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].department + '</option>';	
 							}
 							else {
-								html += '<option value="' + data.res[i].id + '">' + data.res[i].necessity + '</option>';
+								html += '<option value="' + data.res[i].id + '">' + data.res[i].department + '</option>';
 							}
 						}
 		
 						$('#inDepartment').html(html);
+				}
+			});
+		} else if (param == "inDivision") {
+			$.ajax({
+				type: "POST",
+				url: base_url+"user_management/get",
+				data: {
+					param: param,
+					obj: obj
+				},
+				cache: false,
+				dataType: "JSON",
+				beforeSend: function(data) {
+					$('#inDivision').select2({
+						dropdownParent: $('#modalAdd'),
+						theme: 'bootstrap4'
+					})
+				},
+				success: function (data) {
+						var html = '<option value="">Select</option>';
+						var i;
+		
+						for (i=0; i<data.res.length; i++) {
+							if (obj.trim() != "" && obj == data.res[i].id) {
+								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].division + '</option>';	
+							}
+							else {
+								html += '<option value="' + data.res[i].id + '">' + data.res[i].division + '</option>';
+							}
+						}
+		
+						$('#inDivision').html(html);
+				}
+			});
+		} else if (param == "inRole") {
+			$.ajax({
+				type: "POST",
+				url: base_url+"user_management/get",
+				data: {
+					param: param,
+					obj: obj
+				},
+				cache: false,
+				dataType: "JSON",
+				beforeSend: function(data) {
+					$('#inDivision').select2({
+						dropdownParent: $('#modalAdd'),
+						theme: 'bootstrap4'
+					})
+				},
+				success: function (data) {
+						var html = '<option value="">Select</option>';
+						var i;
+		
+						for (i=0; i<data.res.length; i++) {
+							if (obj.trim() != "" && obj == data.res[i].id) {
+								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].role + '</option>';	
+							}
+							else {
+								html += '<option value="' + data.res[i].id + '">' + data.res[i].role + '</option>';
+							}
+						}
+		
+						$('#inRole').html(html);
 				}
 			});
 		}
@@ -282,8 +390,15 @@ function add(param,obj){
 
 		$('#tableSearch tr:last').after(html);
 	} else if (param == "add") {
-		$('#modalAdd').modal('show');
+		$('#modalAdd').modal('show').done(
+			// get("inDepartment","inDepartment","")
+			$('#inMode').val('add')
+		);
 	}
+}
+
+function save(param,obj){
+
 }
 
 function remove(param,obj) {

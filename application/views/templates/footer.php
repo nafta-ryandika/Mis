@@ -42,6 +42,9 @@
 <script src="<?= base_url('assets/'); ?>vendor/jquery/jquery.min.js"></script>
 <script src="<?= base_url('assets/'); ?>vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+<!-- Select2 -->
+<script src="<?php echo base_url('assets/'); ?>vendor/select2/js/select2.full.min.js"></script>
+
 <!-- Core plugin JavaScript-->
 <script src="<?= base_url('assets/'); ?>vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -54,6 +57,9 @@
 <!-- sweetAlert2 -->
 <link href="<?= base_url('assets/'); ?>vendor/sweet_alert2/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet">
 <script src="<?= base_url('assets/'); ?>vendor/sweet_alert2/sweetalert2/sweetalert2.all.min.js"></script>
+
+<!-- validatejs -->
+<script src="<?php echo base_url('assets/'); ?>vendor/validate/validate.min.js"></script>
 
 <script>
     $('.custom-file-input').on('change', function() {

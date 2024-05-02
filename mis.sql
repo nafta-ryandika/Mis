@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `m_access` (
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table mis.m_access: ~5 rows (approximately)
 DELETE FROM `m_access`;
@@ -36,7 +36,9 @@ INSERT INTO `m_access` (`id`, `role_id`, `menu_id`, `created_by`, `created_at`) 
 	(3, 2, 2, 'Administrator', '2023-12-12 10:32:49'),
 	(4, 1, 3, 'Administrator', '2023-12-12 10:32:49'),
 	(12, 1, 2, NULL, NULL),
-	(17, 1, 4, NULL, NULL);
+	(17, 1, 4, NULL, NULL),
+	(18, 1, 5, NULL, '2024-03-04 10:54:50'),
+	(19, 1, 7, NULL, '2024-03-18 15:24:46');
 
 -- Dumping structure for table mis.m_audit_shift
 CREATE TABLE IF NOT EXISTS `m_audit_shift` (
@@ -80,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `m_department` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.m_department: ~8 rows (approximately)
+-- Dumping data for table mis.m_department: ~10 rows (approximately)
 DELETE FROM `m_department`;
 INSERT INTO `m_department` (`id`, `department`, `created_by`, `created_at`) VALUES
 	(1, 'COORPORATE', 'administrator', '2024-01-30 09:55:30'),
@@ -141,18 +143,22 @@ INSERT INTO `m_employee` (`id`, `card`, `name`, `company_id`, `department_id`, `
 CREATE TABLE IF NOT EXISTS `m_menu` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `menu` varchar(128) DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL COMMENT '0 = hide; 1 show;',
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
--- Dumping data for table mis.m_menu: ~4 rows (approximately)
+-- Dumping data for table mis.m_menu: ~6 rows (approximately)
 DELETE FROM `m_menu`;
-INSERT INTO `m_menu` (`id`, `menu`, `created_by`, `created_at`) VALUES
-	(1, 'Administrator', 'Administrator', '2023-12-12 10:43:22'),
-	(2, 'User', 'Administrator', '2023-12-12 10:43:22'),
-	(3, 'Menu', 'Administrator', '2023-12-12 10:43:22'),
-	(4, 'HRD', 'admin', NULL);
+INSERT INTO `m_menu` (`id`, `menu`, `status`, `created_by`, `created_at`) VALUES
+	(1, 'Administrator', 1, 'Administrator', '2023-12-12 10:43:22'),
+	(2, 'User', 1, 'Administrator', '2023-12-12 10:43:22'),
+	(3, 'Menu', 1, 'Administrator', '2023-12-12 10:43:22'),
+	(4, 'HRD', 1, 'admin', NULL),
+	(5, 'Report', 1, 'admin', '2024-03-04 10:54:21'),
+	(6, 'Report Audit', 1, 'admin', '2024-03-15 10:08:15'),
+	(7, 'User_management', 0, 'admin', '2024-03-18 15:24:16');
 
 -- Dumping structure for table mis.m_necessity
 CREATE TABLE IF NOT EXISTS `m_necessity` (
@@ -223,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `m_submenu` (
   `created_by` varchar(256) DEFAULT NULL,
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
 
 -- Dumping data for table mis.m_submenu: ~7 rows (approximately)
 DELETE FROM `m_submenu`;
@@ -233,8 +239,10 @@ INSERT INTO `m_submenu` (`id`, `menu_id`, `title`, `url`, `icon`, `status`, `cre
 	(3, 2, 'Edit Profile', 'user/edit', 'fas fa-fw fa-user-edit', 1, 'Administrator', '2023-12-12 10:28:19'),
 	(4, 3, 'Menu Management', 'menu', 'fas fa-fw fa-folder', 1, 'Administrator', '2023-12-12 10:28:19'),
 	(5, 3, 'Submenu Management', 'menu/submenu', 'fas fa-fw fa-folder-open', 1, 'Administrator', '2023-12-12 10:28:19'),
-	(7, 1, 'Role', 'administrator/role', 'fas fa-fw fa-user-tie', 1, 'Administrator', '2023-12-12 10:28:19'),
-	(9, 4, 'Exit Permit', 'hrd', 'fas fa-fw fa-file-signature', 1, NULL, NULL);
+	(7, 1, 'Role', 'administrator/role', 'fas fa-fw fa-key', 1, 'Administrator', '2023-12-12 10:28:19'),
+	(9, 4, 'Exit Permit', 'hrd', 'fas fa-fw fa-file-signature', 1, NULL, NULL),
+	(10, 5, 'Report Exit Permit', 'report/exitPermit', 'fas fa-fw fa-print', 1, NULL, '2024-03-04 10:00:23'),
+	(11, 1, 'User', 'user_management', 'fas fa-fw fa-user', 1, NULL, '2024-03-18 14:51:33');
 
 -- Dumping structure for table mis.m_token
 CREATE TABLE IF NOT EXISTS `m_token` (
@@ -255,13 +263,14 @@ INSERT INTO `m_token` (`id`, `user_id`, `token`, `created_at`) VALUES
 -- Dumping structure for table mis.m_user
 CREATE TABLE IF NOT EXISTS `m_user` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(16) NOT NULL DEFAULT '',
+  `user_id` varchar(16) DEFAULT NULL,
   `name` varchar(256) DEFAULT NULL,
   `email` varchar(256) DEFAULT NULL,
   `image` varchar(256) DEFAULT NULL,
   `password` varchar(256) DEFAULT NULL,
-  `department` varchar(256) DEFAULT NULL,
-  `division` varchar(256) DEFAULT NULL,
+  `company_id` int(16) DEFAULT '1',
+  `department_id` int(16) DEFAULT NULL,
+  `division_id` int(16) DEFAULT NULL,
   `role_id` int(16) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   `created_by` varchar(256) DEFAULT NULL,
@@ -271,10 +280,10 @@ CREATE TABLE IF NOT EXISTS `m_user` (
 
 -- Dumping data for table mis.m_user: ~3 rows (approximately)
 DELETE FROM `m_user`;
-INSERT INTO `m_user` (`id`, `user_id`, `name`, `email`, `image`, `password`, `department`, `division`, `role_id`, `status`, `created_by`, `created_at`) VALUES
-	(1, 'admin', 'admin', 'sysdev@megamarinepride.com', 'default.png', '$2y$10$31nTmbo9IVv6NnjV7FHNHetkM4aIr18q8XRsRsI/y7qHXaNvtYKxK', '', '', 1, 1, 'administrator', '2023-11-29 07:41:59'),
-	(2, 'user', 'user', 'user@gmail.com', 'default.png', '$2y$10$mqX3iwzex/G/K2cEd5Yer.2DOAYn2AF0G1rFyW249xPh6dS5pX8Fq', '', '', 2, 1, 'administrator', '2023-12-08 05:19:30'),
-	(6, 'coba', 'coba', 'coba@gmail.com', 'default.jpg', '$2y$10$nJtl8t6Ad8W1y69gos6Vc.Wpv8NIq3fxtoUExl.pqkwePuXBbXes2', '', '', 2, 1, 'administrator', '2024-01-03 07:28:55');
+INSERT INTO `m_user` (`id`, `user_id`, `name`, `email`, `image`, `password`, `company_id`, `department_id`, `division_id`, `role_id`, `status`, `created_by`, `created_at`) VALUES
+	(1, 'admin', 'admin', 'sysdev@megamarinepride.com', 'default.png', '$2y$10$31nTmbo9IVv6NnjV7FHNHetkM4aIr18q8XRsRsI/y7qHXaNvtYKxK', 1, 4, 1, 1, 1, 'administrator', '2023-11-29 07:41:59'),
+	(2, 'user', 'user', 'user@gmail.com', 'default.png', '$2y$10$mqX3iwzex/G/K2cEd5Yer.2DOAYn2AF0G1rFyW249xPh6dS5pX8Fq', 1, 4, 1, 2, 1, 'administrator', '2023-12-08 05:19:30'),
+	(6, 'coba', 'coba', 'coba@gmail.com', 'default.jpg', '$2y$10$nJtl8t6Ad8W1y69gos6Vc.Wpv8NIq3fxtoUExl.pqkwePuXBbXes2', 1, 4, 1, 2, 1, 'administrator', '2024-01-03 07:28:55');
 
 -- Dumping structure for table mis.t_exit_permit
 CREATE TABLE IF NOT EXISTS `t_exit_permit` (
@@ -299,17 +308,26 @@ CREATE TABLE IF NOT EXISTS `t_exit_permit` (
   KEY `time_out` (`time_out`),
   KEY `necessity_id` (`necessity_id`),
   KEY `status` (`status`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=latin1;
 
--- Dumping data for table mis.t_exit_permit: ~6 rows (approximately)
+-- Dumping data for table mis.t_exit_permit: ~13 rows (approximately)
 DELETE FROM `t_exit_permit`;
 INSERT INTO `t_exit_permit` (`id`, `employee_id`, `date_in`, `time_in`, `date_out`, `time_out`, `necessity_id`, `remark`, `status`, `created_by`, `created_at`, `log_by`, `log_at`) VALUES
-	(1, 123456, '2024-01-31', '11:02:11', '2024-01-31', '12:00:00', 5, 'test', 1, 'administrator', '2024-02-09 14:26:59', NULL, NULL),
 	(14, 123456, '2024-02-21', '11:08:28', NULL, NULL, 1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 0, 'admin', '2024-02-21 11:08:28', NULL, NULL),
 	(15, 123456, '2024-02-23', '14:15:55', '2024-02-23', '14:36:19', 1, 'test', 1, 'admin', '2024-02-23 14:15:55', 'admin', '2024-02-23 14:36:19'),
 	(16, 123456, '2024-02-23', '14:37:49', '2024-02-23', '14:38:05', 1, 'test', 1, 'admin', '2024-02-23 14:37:49', 'admin', '2024-02-23 14:38:05'),
 	(17, 123456, '2024-02-23', '14:38:18', '2024-02-23', '14:38:29', 1, 'test', 1, 'admin', '2024-02-23 14:38:18', 'admin', '2024-02-23 14:38:29'),
-	(19, 123456, '2024-02-23', '14:50:20', NULL, NULL, 1, 'test', 3, 'admin', '2024-02-23 14:50:20', NULL, NULL);
+	(19, 123456, '2024-02-23', '14:50:20', NULL, NULL, 1, 'test', 3, 'admin', '2024-02-23 14:50:20', NULL, NULL),
+	(20, 123456, '2024-02-27', '09:59:14', '2024-02-27', '09:59:32', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, 'admin', '2024-02-27 09:59:14', 'admin', '2024-02-27 09:59:32'),
+	(21, 123456, '2024-02-27', '11:08:15', '2024-02-27', '11:08:31', 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 1, 'admin', '2024-02-27 11:08:15', 'admin', '2024-02-27 11:08:31'),
+	(22, 123456, '2024-02-27', '11:08:43', NULL, NULL, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 2, 'admin', '2024-02-27 11:08:43', 'admin', '2024-02-27 11:08:49'),
+	(23, 123456, '2024-02-27', '11:28:09', NULL, NULL, 1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum', 2, 'admin', '2024-02-27 11:28:09', 'admin', '2024-02-27 11:53:51'),
+	(24, 123456, '2024-02-27', '11:54:33', NULL, NULL, 5, 'test new data from uncomplete data', 2, 'admin', '2024-02-27 11:54:33', 'admin', '2024-02-28 14:12:14'),
+	(25, 123456, '2024-02-28', '14:12:20', '2024-02-28', '14:12:33', 1, 'test', 1, 'admin', '2024-02-28 14:12:20', 'admin', '2024-02-28 14:12:33'),
+	(26, 123456, '2024-02-29', '13:34:45', '2024-03-01', '14:27:11', 5, '1', 1, 'admin', '2024-02-29 13:34:45', 'admin', '2024-03-04 09:15:21'),
+	(27, 123456, '2024-03-04', '09:18:11', '2024-03-04', '09:19:04', 4, '1 edit', 1, 'admin', '2024-03-04 09:18:11', 'admin', '2024-03-04 09:19:04'),
+	(28, 123456, '2024-03-04', '09:31:15', '2024-03-04', '14:54:00', 5, '-', 1, 'admin', '2024-03-04 09:31:15', 'admin', '2024-03-04 14:54:00'),
+	(29, 123456, '2024-03-19', '16:17:41', '2024-03-19', '16:22:37', 2, 'tugas perusahaan', 1, 'admin', '2024-03-19 16:17:41', 'admin', '2024-03-19 16:22:37');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
