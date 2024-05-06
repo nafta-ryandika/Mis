@@ -28,13 +28,6 @@
     <script>
         var base_url = "<?php echo base_url(); ?>";
     </script>
-
-    <style>
-        .error {
-            color: red;
-            font-size: 16px;
-        }
-    </style>
 </head>
 
 <body id="page-top">

@@ -1,50 +1,39 @@
 $(document).ready(function() {
-	get("inDepartment","inDepartment","");
-	get("inRole","inRole","");
-
 	$('#inDepartment').on('change',function(){
 		var inDepartment = $('#inDepartment').val().trim();
-		$(this).valid();
 		get("inDivision",inDepartment,"");
 	})
 
-    viewData();
 
-	$('#formAdd').validate({
-		rules: {
-            inId: {
-                required: true
-            },
-			inName: {
-				required: true
-			},
-			// inDepartment: {
-			// 	required: true
-			// },
-			// inDivision: {
-			// 	required: true
-			// },
-			inRole: {
-				required: true
-			},
-			inEmail: {
-				required: true
-			},
-			inPassword: {
-				required: true
-			},
-			inRepeatPassword: {
-				required: true
-			},
-        }
-	});
+	$('#inDepartment').on('click',function(){
+		$('#formAdd').validate().resetForm();
+	})
 
 	$('#modalAdd #btnSave').on('click',function(){
-		$('#formAdd').valid();
+		save('user','');
 	})
+
+    viewData();
 });
 
 $(function () {
+	$.validator.setDefaults({         
+		focusInvalid: false
+	});
+
+	function scrollToError(error, validator) {
+		var elem = $(validator.errorList[0].element);
+		if (elem.length) {
+			if (elem.is(':visible'))
+				return elem.offset().top - 16;
+			elem = elem.prev($(".select2-container"));
+			if (elem.length) {
+				return elem.offset().top - 16;
+			}
+		}
+		return 0; // scroll to top if all else fails
+	}
+
     $('#inDepartment').select2({
 		dropdownParent: $('#modalAdd'),
 		theme: 'bootstrap4'
@@ -390,15 +379,66 @@ function add(param,obj){
 
 		$('#tableSearch tr:last').after(html);
 	} else if (param == "add") {
-		$('#modalAdd').modal('show').done(
-			// get("inDepartment","inDepartment","")
-			$('#inMode').val('add')
-		);
+		$('#modalAdd').modal('show');
+		get("inDepartment","inDepartment","");
+		get("inRole","inRole","");
+		$('#inMode').val('add')
 	}
 }
 
 function save(param,obj){
+	if (param == 'user') {
+		var forms = $('#formAdd');
+	    
+		var validation = Array.prototype.filter.call(forms, function(form) {
+			if (form.checkValidity() === false) {
+			event.preventDefault();
+			event.stopPropagation();
+			} else {
+				var  inMode = $('#inMode').val();
+				var  inId = $('#inId').val();
+				var  inName = $('#inName').val();
+				var  inDepartment = $('#inDepartment').val();
+				var  inDivision = $('#inDivision').val();
+				var  inRole = $('#inRole').val();
+				var  inEmail = $('#inEmail').val();
+				var  inImage = $('#inImage').val();
+				var  inPassword = $('#inPassword').val();
+				var  inRepeatpassword = $('#inRepeatpassword').val();
+				var  inStatus = $('#inStatus').val();
 
+				$.ajax({
+					type: "POST",
+					url: base_url+"user_management/save",
+					data: {
+						param: param,
+						obj: obj,
+						inMode: inMode,
+						inId: inId,
+						inName: inName,
+						inDepartment: inDepartment,
+						inDivision: inDivision,
+						inRole: inRole,
+						inEmail: inEmail,
+						inImage: inImage,
+						inPassword: inPassword,
+						inRepeatpassword: inRepeatpassword,
+						inStatus: inStatus 
+					},
+					cache: false,
+					dataType: "JSON",
+					beforeSend: function(data) {
+						
+					},
+					success: function (data) {
+						console.log('test');	
+					}
+				});
+			}
+
+			form.classList.add('was-validated');
+		});
+	}
 }
 
 function remove(param,obj) {

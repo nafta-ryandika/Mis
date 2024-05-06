@@ -118,19 +118,19 @@
                     <div class="form-group row">
                         <label for="inId" class="col-sm-3 col-form-label">ID</label>
                         <div class="col-sm-3">
-                            <input type="text" class="form-control" id="inId" name="inId">
+                            <input type="text" class="form-control" id="inId" name="inId" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inName" class="col-sm-3 col-form-label">Name</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="inName" name="inName">
+                            <input type="text" class="form-control" id="inName" name="inName" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inDepartment" class="col-sm-3 col-form-label">Department</label>
                         <div class="col-sm-9">
-                            <select class="form-control select2" style="width: 100%;" id="inDepartment" name="inDepartment">
+                            <select class="form-control select2" style="width: 100%;" id="inDepartment" name="inDepartment" required>
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -138,7 +138,7 @@
                     <div class="form-group row">
                         <label for="inDivision" class="col-sm-3 col-form-label">Division</label>
                         <div class="col-sm-9">
-                            <select class="form-control select2" style="width: 100%;" id="inDivision" name="inDivision">
+                            <select class="form-control select2" style="width: 100%;" id="inDivision" name="inDivision" required>
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -146,7 +146,7 @@
                     <div class="form-group row">
                         <label for="inRole" class="col-sm-3 col-form-label">Role</label>
                         <div class="col-sm-9">
-                            <select class="form-control" style="width: 100%;" id="inRole" name="inRole">
+                            <select class="form-control" style="width: 100%;" id="inRole" name="inRole" required>
                                 <option value="">Select</option>
                             </select>
                         </div>
@@ -154,7 +154,7 @@
                     <div class="form-group row">
                         <label for="inEmail" class="col-sm-3 col-form-label">Email</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="inEmail" name="inEmail">
+                            <input type="text" class="form-control" id="inEmail" name="inEmail">
                         </div>
                     </div>
                     <div class="form-group row">
@@ -169,13 +169,13 @@
                     <div class="form-group row">
                         <label for="inPassword" class="col-sm-3 col-form-label">Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inPassword" name="inPassword">
+                            <input type="password" class="form-control" id="inPassword" name="inPassword" required>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label for="inRepeatpassword" class="col-sm-3 col-form-label">Repeat Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inRepeatPassword" name="inRepeatPassword">
+                            <input type="password" class="form-control" id="inRepeatPassword" name="inRepeatPassword" required>
                         </div>
                     </div>
                     <div class="form-group row">
