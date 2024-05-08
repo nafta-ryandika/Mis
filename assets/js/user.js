@@ -4,36 +4,18 @@ $(document).ready(function() {
 		get("inDivision",inDepartment,"");
 	})
 
-
-	$('#inDepartment').on('click',function(){
-		$('#formAdd').validate().resetForm();
-	})
-
 	$('#modalAdd #btnSave').on('click',function(){
 		save('user','');
+	})
+
+	$('#modalAdd #inId').on('keyup',function(){
+		check("inId","");
 	})
 
     viewData();
 });
 
 $(function () {
-	$.validator.setDefaults({         
-		focusInvalid: false
-	});
-
-	function scrollToError(error, validator) {
-		var elem = $(validator.errorList[0].element);
-		if (elem.length) {
-			if (elem.is(':visible'))
-				return elem.offset().top - 16;
-			elem = elem.prev($(".select2-container"));
-			if (elem.length) {
-				return elem.offset().top - 16;
-			}
-		}
-		return 0; // scroll to top if all else fails
-	}
-
     $('#inDepartment').select2({
 		dropdownParent: $('#modalAdd'),
 		theme: 'bootstrap4'
@@ -407,33 +389,50 @@ function save(param,obj){
 				var  inRepeatpassword = $('#inRepeatpassword').val();
 				var  inStatus = $('#inStatus').val();
 
-				$.ajax({
-					type: "POST",
-					url: base_url+"user_management/save",
-					data: {
-						param: param,
-						obj: obj,
-						inMode: inMode,
-						inId: inId,
-						inName: inName,
-						inDepartment: inDepartment,
-						inDivision: inDivision,
-						inRole: inRole,
-						inEmail: inEmail,
-						inImage: inImage,
-						inPassword: inPassword,
-						inRepeatpassword: inRepeatpassword,
-						inStatus: inStatus 
-					},
-					cache: false,
-					dataType: "JSON",
-					beforeSend: function(data) {
-						
-					},
-					success: function (data) {
-						console.log('test');	
-					}
-				});
+				if (inPassword != inRepeatpassword) {
+					$("#formAdd").removeClass("was-validated");
+					$("#inPassword").addClass("is-invalid");
+					$("#inRepeatpassword").addClass("is-invalid");
+					return;
+				} else {
+					$.ajax({
+						type: "POST",
+						url: base_url+"user_management/save",
+						data: {
+							param: param,
+							obj: obj,
+							inMode: inMode,
+							inId: inId,
+							inName: inName,
+							inDepartment: inDepartment,
+							inDivision: inDivision,
+							inRole: inRole,
+							inEmail: inEmail,
+							inImage: inImage,
+							inPassword: inPassword,
+							inStatus: inStatus 
+						},
+						cache: false,
+						dataType: "JSON",
+						beforeSend: function(data) {
+							
+						},
+						success: function (data) {
+							if (data.res == 'success') {
+								Swal.fire({
+									title: "Data Saved!",
+									icon: "success",
+									timer: 1000
+								}).then(function () {
+									clear('user','');
+									$("#inId").focus();
+								});
+							} else if (date.err == '') {
+								console.log(data.err);
+							} 
+						}
+					});
+				}
 			}
 
 			form.classList.add('was-validated');
@@ -441,8 +440,55 @@ function save(param,obj){
 	}
 }
 
+function clear(param,obj) {
+	if (param == "user") {
+		$('#inId').val("");
+		$('#inName').val("");
+		$('#inMode').val("");
+		$('#inDepartment').val("");
+		$('#inDivision').val("");
+		$('#inRole').val("");
+		$('#inEmail').val("");
+		$('#inImage').val("");
+		$('#inPassword').val("");
+		$('#inRepeatpassword').val("");
+		$('#inStatus').val("");
+
+		$("#formAdd").removeClass("was-validated");
+		$("input").removeClass("is-invalid");
+
+		get("inDepartment","inDepartment","");
+		get("inRole","inRole","");
+	}
+}
+
 function remove(param,obj) {
 	if (param == "parameter") {
 		$(obj).closest('tr').remove();
+	}
+}
+
+function check(param,obj) {
+	if (param == "inId") {
+		var inId = $("#"+param).val();
+		var num = inId.length;
+		
+		if (num >= 4) {
+			$.ajax({
+				type: "POST",
+				url: base_url+"user_management/check",
+				data: {
+						param: param,
+						obj: inId
+				},
+				cache: false,
+				dataType: "JSON",
+				success: function (data) {
+					console.log(data.res);
+				}
+			})
+		} else {
+			return;
+		}
 	}
 }

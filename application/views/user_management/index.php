@@ -103,7 +103,7 @@
 <!-- End of Main Content -->
 
 <!-- Modal -->
-<div class="modal fade" id="modalAdd" aria-labelledby="modalAddlabel" aria-hidden="true">
+<div class="modal fade" id="modalAdd" aria-labelledby="modalAddlabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -171,11 +171,14 @@
                         <div class="col-sm-9">
                             <input type="password" class="form-control" id="inPassword" name="inPassword" required>
                         </div>
+                        <div class="invalid-feedback">
+                            Password dont match !
+                        </div>
                     </div>
                     <div class="form-group row">
                         <label for="inRepeatpassword" class="col-sm-3 col-form-label">Repeat Password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" id="inRepeatPassword" name="inRepeatPassword" required>
+                            <input type="password" class="form-control" id="inRepeatpassword" name="inRepeatpassword" required>
                         </div>
                     </div>
                     <div class="form-group row">

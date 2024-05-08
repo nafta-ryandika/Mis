@@ -57,7 +57,7 @@ class User_management extends CI_Controller
         $param = $this->input->post('param');
         $obj = $this->input->post('obj');
 
-        $data = $this->Hrd_M->check($param, $obj);
+        $data = $this->User_management_M->check($param, $obj);
 
         echo (json_encode($data));
     }
@@ -77,15 +77,19 @@ class User_management extends CI_Controller
         $param = $this->input->post('param');
         $obj = $this->input->post('obj');
 
-        if ($param == 'add') {
-            if ($obj == 'exitPermit') {
-                $inId = $this->input->post('inId');
-                $inNecessity = $this->input->post('inNecessity');
-                $inRemark = $this->input->post('inRemark');
-                $inTransaction_id = $this->input->post('inTransaction_id');
+        if ($param == 'user') {
+            $inMode = $this->input->post('inMode');
+            $inId = $this->input->post('inId');
+            $inName = $this->input->post('inName');
+            $inDepartment = $this->input->post('inDepartment');
+            $inDivision = $this->input->post('inDivision');
+            $inRole = $this->input->post('inRole');
+            $inEmail = $this->input->post('inEmail');
+            $inImage = $this->input->post('inImage');
+            $inPassword = password_hash($this->input->post('inPassword'), PASSWORD_DEFAULT);
+            $inStatus = $this->input->post('inStatus');
 
-                $data = $this->Hrd_M->save($param, $obj, $inId, $inNecessity, $inRemark, $inTransaction_id);
-            }
+            $data = $this->User_management_M->save($param, $obj, $inMode, $inId, $inName, $inDepartment, $inDivision, $inRole, $inEmail, $inImage, $inPassword, $inStatus);
         } else if ($param == 'update') {
             if ($obj == 'exitPermit') {
                 $inId = $this->input->post('inId');
