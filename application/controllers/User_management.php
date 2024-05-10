@@ -27,6 +27,7 @@ class User_management extends CI_Controller
     {
         $sql = "SELECT 
                 *, 
+                dt1.id AS id,
                 IF(dt1.status = 0, 'Deactivate', IF(dt1.status = 1, 'Active','Unknown')) AS status_name
                 FROM 
                 (

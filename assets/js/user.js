@@ -138,7 +138,41 @@ function get(param,obj,callBack) {
 				}
 			}
 		});	
-	} else {
+	}  else if (obj == "edit") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: param,
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+				var user_data = data.res;
+
+				$('#modalAdd').modal('show').after(function (data) {
+					get("inDepartment","inDepartment","");
+					get("inRole","inRole","");
+					$("#inId").val("test");
+					$("#inName").val(user_data.name);
+					$("#inDepartment").val(user_data.department_id);
+					$("#inDivision").val(user_data.division_id);
+					$("#inRole").val(user_data.role_id);
+					$("#inImage").val();
+					$("#inPassword").val(user_data.password);
+					$("#inRepeatpassword").val(user_data.password);
+					$("#inStatus").val(user_data.status);
+					
+					// for (i=0; i<user_data.length; i++) {
+					// 	$("#inName").val(user_data.res[i].name);
+					// 	console.log("yolo : "+(user_data.res[i].name));
+					// }
+					// console.log("yolo : "+(user_data.name));
+				})
+			}
+		})
+	}else {
 		if (param == "searchColumn") {
 			var rowIndex = $(obj).closest('tr').index();
 			var searchColumn = $(obj).val();
@@ -389,7 +423,14 @@ function save(param,obj){
 				var  inRepeatpassword = $('#inRepeatpassword').val();
 				var  inStatus = $('#inStatus').val();
 
-				if (inPassword != inRepeatpassword) {
+				if ($(".is-invalid").length > 0) {
+					Swal.fire({
+						title: "Error !",
+						icon: "error",
+						timer: 1000
+					})
+					return;
+				} else if (inPassword != inRepeatpassword) {
 					$("#formAdd").removeClass("was-validated");
 					$("#inPassword").addClass("is-invalid");
 					$("#inRepeatpassword").addClass("is-invalid");
@@ -484,7 +525,12 @@ function check(param,obj) {
 				cache: false,
 				dataType: "JSON",
 				success: function (data) {
-					console.log(data.res);
+					if (data.res > 0) {
+						$("#inId").addClass("is-invalid");
+					}
+					else {
+						$("#inId").removeClass("is-invalid");
+					}
 				}
 			})
 		} else {

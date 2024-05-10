@@ -115,6 +115,7 @@
             <div class="modal-body">
                 <form id="formAdd">
                     <input type="hidden" class="form-control" id="inMode">
+                    <input type="hidden" class="form-control" id="inIdx">
                     <div class="form-group row">
                         <label for="inId" class="col-sm-3 col-form-label">ID</label>
                         <div class="col-sm-3">
@@ -161,7 +162,7 @@
                         <label for="inImage" class="col-sm-3 col-form-label">Image</label>
                         <div class="col-sm-9">
                             <div class=" custom-file">
-                                <input type="file" class="custom-file-input" id="customFile">
+                                <input type="file" class="custom-file-input" id="inImage" disabled>
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                         </div>

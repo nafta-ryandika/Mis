@@ -56,6 +56,25 @@ class User_management_M extends CI_Model
             } else {
                 return FALSE;
             }
+        } else if ($obj == "edit") {
+            $this->load->library('encrypt');
+
+            $query = "SELECT 
+                        id, user_id, name, email, image, password, company_id, department_id, division_id, role_id, `status` 
+                        FROM m_user 
+                        WHERE 
+                        id = '" . $param . "'";
+
+            $row = $this->db->query($query)->num_rows();
+
+            if ($row > 0) {
+                $data["res"] = $this->db->query($query)->row_array();
+
+                $encryptPass = "test";
+                $data["res"] = $encryptPass;
+            } else {
+                return FALSE;
+            }
         }
 
         return $data;
