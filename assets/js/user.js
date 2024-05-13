@@ -12,6 +12,10 @@ $(document).ready(function() {
 		check("inId","");
 	})
 
+	$('#modalAdd').on('hidden.bs.modal', function () {
+		clear('user','');
+	})
+
     viewData();
 });
 
@@ -100,45 +104,7 @@ function viewData() {
 }
 
 function get(param,obj,callBack) {
-	if (obj == 0) {
-		if (param == "dt1.status") {
-			var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
-							<option value="">Select</option>\n\
-							<option value="0">Pending</option>\n\
-							<option value="1">Complete</option>\n\
-							<option value="2">Uncomplete</option>\n\
-						</select>';
-			
-			callBack(html);
-		}
-	} else if (obj == 1) {
-		$.ajax({
-			type: "POST",
-			url: base_url+"report/get",
-			data: {
-				report: 'exitPermit',
-				param: param,
-				obj: obj
-			},
-			cache: false,
-			dataType: "JSON",
-			success: function (data) {
-				if (param == "dt1.necessity_id") {
-					var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
-									<option value="">Select</option>';
-					var i;
-	
-					for (i=0; i<data.res.length; i++) {
-						html += '<option value="' + data.res[i].id + '">' + data.res[i].necessity + '</option>';
-					}
-
-					html += "</select>";
-
-					callBack(html);
-				}
-			}
-		});	
-	}  else if (obj == "edit") {
+	if (param == "edit") {
 		$.ajax({
 			type: "POST",
 			url: base_url+"user_management/get",
@@ -152,16 +118,25 @@ function get(param,obj,callBack) {
 				var user_data = data.res;
 
 				$('#modalAdd').modal('show').after(function (data) {
-					get("inDepartment","inDepartment","");
-					get("inRole","inRole","");
-					$("#inId").val("test");
+					$('#inMode').val('edit');
+					get("inDepartment",user_data.department_id,"");
+					get("inDivision",user_data.department_id,user_data.division_id);
+					get("inRole",user_data.role_id,"");
+					$("#inId").val(user_data.user_id);
 					$("#inName").val(user_data.name);
-					$("#inDepartment").val(user_data.department_id);
-					$("#inDivision").val(user_data.division_id);
-					$("#inRole").val(user_data.role_id);
-					$("#inImage").val();
-					$("#inPassword").val(user_data.password);
-					$("#inRepeatpassword").val(user_data.password);
+
+					
+
+					// $("#inPassword").closest("div").parent("div").hide();
+					// $("#inRepeatpassword").closest("div").parent("div").hide();
+
+					// $("#inPassword").prop("required",false);​​​​​
+					// $('#inPassword').removeAttr('required');​​​​​
+
+					// $("#inRole").val();
+					// $("#inImage").val();
+					// $("#inPassword").val(user_data.password);
+					// $("#inRepeatpassword").val(user_data.password);
 					$("#inStatus").val(user_data.status);
 					
 					// for (i=0; i<user_data.length; i++) {
@@ -170,10 +145,11 @@ function get(param,obj,callBack) {
 					// }
 					// console.log("yolo : "+(user_data.name));
 				})
+			}, complete: function(data){
+				// $("#inPassword").prop("required",false);​​​​​
 			}
 		})
-	}else {
-		if (param == "searchColumn") {
+	} else if (param == "searchColumn") {
 			var rowIndex = $(obj).closest('tr').index();
 			var searchColumn = $(obj).val();
 
@@ -194,97 +170,96 @@ function get(param,obj,callBack) {
 			} else {
 				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','text');
 			}
-		} else if (param == "inDepartment") {
-			$.ajax({
-				type: "POST",
-				url: base_url+"user_management/get",
-				data: {
-					param: param,
-					obj: obj
-				},
-				cache: false,
-				dataType: "JSON",
-				success: function (data) {
-						var html = '<option value="">Select</option>';
-						var i;
-		
-						for (i=0; i<data.res.length; i++) {
-							if (obj.trim() != "" && obj == data.res[i].id) {
-								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].department + '</option>';	
-							}
-							else {
-								html += '<option value="' + data.res[i].id + '">' + data.res[i].department + '</option>';
-							}
+	} else if (param == "inDepartment") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: param,
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+					var html = '<option value="">Select</option>';
+					var i;
+	
+					for (i=0; i<data.res.length; i++) {
+						if (obj.trim() != "" && obj == data.res[i].id) {
+							html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].department + '</option>';	
 						}
-		
-						$('#inDepartment').html(html);
-				}
-			});
-		} else if (param == "inDivision") {
-			$.ajax({
-				type: "POST",
-				url: base_url+"user_management/get",
-				data: {
-					param: param,
-					obj: obj
-				},
-				cache: false,
-				dataType: "JSON",
-				beforeSend: function(data) {
-					$('#inDivision').select2({
-						dropdownParent: $('#modalAdd'),
-						theme: 'bootstrap4'
-					})
-				},
-				success: function (data) {
-						var html = '<option value="">Select</option>';
-						var i;
-		
-						for (i=0; i<data.res.length; i++) {
-							if (obj.trim() != "" && obj == data.res[i].id) {
-								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].division + '</option>';	
-							}
-							else {
-								html += '<option value="' + data.res[i].id + '">' + data.res[i].division + '</option>';
-							}
+						else {
+							html += '<option value="' + data.res[i].id + '">' + data.res[i].department + '</option>';
 						}
-		
-						$('#inDivision').html(html);
-				}
-			});
-		} else if (param == "inRole") {
-			$.ajax({
-				type: "POST",
-				url: base_url+"user_management/get",
-				data: {
-					param: param,
-					obj: obj
-				},
-				cache: false,
-				dataType: "JSON",
-				beforeSend: function(data) {
-					$('#inDivision').select2({
-						dropdownParent: $('#modalAdd'),
-						theme: 'bootstrap4'
-					})
-				},
-				success: function (data) {
-						var html = '<option value="">Select</option>';
-						var i;
-		
-						for (i=0; i<data.res.length; i++) {
-							if (obj.trim() != "" && obj == data.res[i].id) {
-								html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].role + '</option>';	
-							}
-							else {
-								html += '<option value="' + data.res[i].id + '">' + data.res[i].role + '</option>';
-							}
+					}
+	
+					$('#inDepartment').html(html);
+			}
+		});
+	} else if (param == "inDivision") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: param,
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			beforeSend: function(data) {
+				$('#inDivision').select2({
+					dropdownParent: $('#modalAdd'),
+					theme: 'bootstrap4'
+				})
+			},
+			success: function (data) {
+					var html = '<option value="">Select</option>';
+					var i;
+	
+					for (i=0; i<data.res.length; i++) {
+						if (callBack.trim() != "" && callBack == data.res[i].id) {
+							html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].division + '</option>';	
 						}
-		
-						$('#inRole').html(html);
-				}
-			});
-		}
+						else {
+							html += '<option value="' + data.res[i].id + '">' + data.res[i].division + '</option>';
+						}
+					}
+	
+					$('#inDivision').html(html);
+			}
+		});
+	} else if (param == "inRole") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: param,
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			beforeSend: function(data) {
+				$('#inDivision').select2({
+					dropdownParent: $('#modalAdd'),
+					theme: 'bootstrap4'
+				})
+			},
+			success: function (data) {
+					var html = '<option value="">Select</option>';
+					var i;
+	
+					for (i=0; i<data.res.length; i++) {
+						if (obj.trim() != "" && obj == data.res[i].id) {
+							html += '<option value="' + data.res[i].id + '" selected>' + data.res[i].role + '</option>';	
+						}
+						else {
+							html += '<option value="' + data.res[i].id + '">' + data.res[i].role + '</option>';
+						}
+					}
+	
+					$('#inRole').html(html);
+			}
+		});
 	}
 }
 
@@ -398,7 +373,7 @@ function add(param,obj){
 		$('#modalAdd').modal('show');
 		get("inDepartment","inDepartment","");
 		get("inRole","inRole","");
-		$('#inMode').val('add')
+		$('#inMode').val('add');
 	}
 }
 
@@ -500,6 +475,9 @@ function clear(param,obj) {
 
 		get("inDepartment","inDepartment","");
 		get("inRole","inRole","");
+
+		$("#inPassword").closest("div").parent("div").show();
+		$("#inRepeatpassword").closest("div").parent("div").show();
 	}
 }
 
