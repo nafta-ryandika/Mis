@@ -54,9 +54,9 @@
                     ?>
                 </td>
                 <td>
-                    <a class="btn btn-info m-1" id="btnDetail" title="Detail" onclick="check('<?= $data_user['id']; ?>','exitPermit|detail')"><i class="fas fa-fw fa-solid fa-magnifying-glass m-1"></i></a>
+                    <a class="btn btn-info m-1" id="btnDetail" title="Detail" onclick="get('detail','<?= $data_user['id']; ?>','')"><i class="fas fa-fw fa-solid fa-eye m-1"></i></a>
                     <a class="btn btn-warning m-1" id="btnEdit" title="Edit" onclick="get('edit','<?= $data_user['id']; ?>','')"><i class="fas fa-fw fa-solid fa-pen-to-square m-1"></i></a>
-                    <a class="btn btn-danger m-1" id="btnDelete" title="Delete" onclick="remove('<?= $data_user['id']; ?>','exitPermit')"><i class="fas fa-fw fa-solid fa-square-xmark m-1"></i></a>
+                    <a class="btn btn-danger m-1" id="btnDelete" title="Delete" onclick="remove('data','<?= $data_user['id']; ?>')"><i class="fas fa-fw fa-solid fa-square-xmark m-1"></i></a>
                 </td>
             </tr>
         <?php

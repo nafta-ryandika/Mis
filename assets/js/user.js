@@ -122,31 +122,14 @@ function get(param,obj,callBack) {
 					get("inDepartment",user_data.department_id,"");
 					get("inDivision",user_data.department_id,user_data.division_id);
 					get("inRole",user_data.role_id,"");
+					$("#inIdx").val(user_data.id);
 					$("#inId").val(user_data.user_id);
-					$("#inName").val(user_data.name);
+					$("#inName").val(user_data.name);	
 
-					
-
-					// $("#inPassword").closest("div").parent("div").hide();
-					// $("#inRepeatpassword").closest("div").parent("div").hide();
-
-					// $("#inPassword").prop("required",false);​​​​​
-					// $('#inPassword').removeAttr('required');​​​​​
-
-					// $("#inRole").val();
-					// $("#inImage").val();
-					// $("#inPassword").val(user_data.password);
-					// $("#inRepeatpassword").val(user_data.password);
+					$("#inPassword").closest("div").parent("div").hide();
+					$("#inRepeatpassword").closest("div").parent("div").hide();
 					$("#inStatus").val(user_data.status);
-					
-					// for (i=0; i<user_data.length; i++) {
-					// 	$("#inName").val(user_data.res[i].name);
-					// 	console.log("yolo : "+(user_data.res[i].name));
-					// }
-					// console.log("yolo : "+(user_data.name));
 				})
-			}, complete: function(data){
-				// $("#inPassword").prop("required",false);​​​​​
 			}
 		})
 	} else if (param == "searchColumn") {
@@ -163,8 +146,9 @@ function get(param,obj,callBack) {
 				get(searchColumn,"1",function(data){
 					$('#tableSearch tr:eq('+rowIndex+') .col-5').html(data);
 				})
-			} else if (searchColumn == "dt1.status") {
-				get(searchColumn,"0",function(data){
+			} else if (searchColumn == "status") {
+				console.log("searchColumn"+searchColumn);
+				get("searchColumn"+searchColumn,"",function(data){
 					$('#tableSearch tr:eq('+rowIndex+') .col-5').html(data);
 				})
 			} else {
@@ -260,6 +244,55 @@ function get(param,obj,callBack) {
 					$('#inRole').html(html);
 			}
 		});
+	} else if (param == "detail") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: param,
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+				var user_data = data.res;
+
+				$('#modalDetail').modal('show').after(function (data) {
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inId").text(user_data.user_id);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inName").text(user_data.name);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inDepartment").text(user_data.department);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inDivision").text(user_data.division);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inRole").text(user_data.role);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inEmail").text(user_data.email);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inImage").attr("src",base_url+"assets/img/profile/"+user_data.image);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inStatus").text(user_data.status);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inCreated_by").text(user_data.created_by);
+					$("#modalDetail .modal-dialog .modal-content .modal-body #inCreated_at").text(user_data.created_at);
+					
+					// get("inDepartment",user_data.department_id,"");
+					// get("inDivision",user_data.department_id,user_data.division_id);
+					// get("inRole",user_data.role_id,"");
+					// $("#inIdx").val(user_data.id);
+					// $("#inId").val(user_data.user_id);
+					// $("#inName").val(user_data.name);	
+
+					// $("#inPassword").closest("div").parent("div").hide();
+					// $("#inRepeatpassword").closest("div").parent("div").hide();
+					// $("#inStatus").val(user_data.status);
+				})
+			}
+		})
+	} else if (param == "searchColumnstatus") {
+		if (param == "dt1.status") {
+			var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
+							<option value="">Select</option>\n\
+							<option value="0">Pending</option>\n\
+							<option value="1">Complete</option>\n\
+							<option value="2">Uncomplete</option>\n\
+						</select>';
+			
+			callBack(html);
+		}
 	}
 }
 
@@ -380,24 +413,32 @@ function add(param,obj){
 function save(param,obj){
 	if (param == 'user') {
 		var forms = $('#formAdd');
+		var  inMode = $('#inMode').val();
+		var  inIdx = $('#inIdx').val();
+		var  inId = $('#inId').val();
+		var  inName = $('#inName').val();
+		var  inDepartment = $('#inDepartment').val();
+		var  inDivision = $('#inDivision').val();
+		var  inRole = $('#inRole').val();
+		var  inEmail = $('#inEmail').val();
+		var  inImage = $('#inImage').val();
+		var  inPassword = $('#inPassword').val();
+		var  inRepeatpassword = $('#inRepeatpassword').val();
+		var  inStatus = $('#inStatus').val();
+
+		if (inMode == "edit") {
+			$("#modalAdd #inPassword").prop("required",false);
+			$("#modalAdd #inRepeatpassword").prop("required",false);
+		} else {
+			$("#modalAdd #inPassword").prop("required",true);
+			$("#modalAdd #inRepeatpassword").prop("required",true);
+		}
 	    
 		var validation = Array.prototype.filter.call(forms, function(form) {
 			if (form.checkValidity() === false) {
 			event.preventDefault();
 			event.stopPropagation();
 			} else {
-				var  inMode = $('#inMode').val();
-				var  inId = $('#inId').val();
-				var  inName = $('#inName').val();
-				var  inDepartment = $('#inDepartment').val();
-				var  inDivision = $('#inDivision').val();
-				var  inRole = $('#inRole').val();
-				var  inEmail = $('#inEmail').val();
-				var  inImage = $('#inImage').val();
-				var  inPassword = $('#inPassword').val();
-				var  inRepeatpassword = $('#inRepeatpassword').val();
-				var  inStatus = $('#inStatus').val();
-
 				if ($(".is-invalid").length > 0) {
 					Swal.fire({
 						title: "Error !",
@@ -418,6 +459,7 @@ function save(param,obj){
 							param: param,
 							obj: obj,
 							inMode: inMode,
+							inIdx: inIdx,
 							inId: inId,
 							inName: inName,
 							inDepartment: inDepartment,
@@ -430,18 +472,21 @@ function save(param,obj){
 						},
 						cache: false,
 						dataType: "JSON",
-						beforeSend: function(data) {
-							
-						},
 						success: function (data) {
 							if (data.res == 'success') {
 								Swal.fire({
 									title: "Data Saved!",
 									icon: "success",
 									timer: 1000
-								}).then(function () {
-									clear('user','');
-									$("#inId").focus();
+								}).then(function () { 
+									if (inMode == "add") {
+										clear('user','');
+										$("#inId").focus();	
+									} else if (inMode == "edit") {
+										clear('user','');
+										$('#modalAdd').modal('toggle');
+										viewData();
+									}
 								});
 							} else if (date.err == '') {
 								console.log(data.err);
@@ -478,12 +523,70 @@ function clear(param,obj) {
 
 		$("#inPassword").closest("div").parent("div").show();
 		$("#inRepeatpassword").closest("div").parent("div").show();
+
+		$("#modalAdd #inPassword").prop("required",true);
+		$("#modalAdd #inRepeatpassword").prop("required",true);
 	}
 }
 
 function remove(param,obj) {
 	if (param == "parameter") {
 		$(obj).closest('tr').remove();
+	} else if (param == "data") {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: "btn btn-lg btn-success m-3",
+				cancelButton: "btn btn-lg btn-danger m-3"
+			},
+			buttonsStyling: false
+		});
+
+		swalWithBootstrapButtons.fire({
+			title: "Are you sure?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: "POST",
+					url: base_url+"user_management/remove",
+					data: {
+						param: param,
+						obj: obj
+					},
+					cache: false,
+					dataType: "JSON",
+					success: function (data) {
+						if (data.res == 'success') {
+							Swal.fire({
+								title: "Data Saved!",
+								icon: "success",
+								timer: 1000
+							}).then(function () { 
+								viewData();
+							});
+						} else if (date.err == '') {
+							console.log(data.err);
+						} 
+					}
+				});
+
+				swalWithBootstrapButtons.fire({
+					title: "Deleted!",
+					icon: "success"
+				});
+			} else if (
+				result.dismiss === Swal.DismissReason.cancel
+			) {
+				swalWithBootstrapButtons.fire({
+					title: "Cancelled",
+					icon: "error"
+				});
+			}
+		});
 	}
 }
 

@@ -80,6 +80,7 @@ class User_management extends CI_Controller
 
         if ($param == 'user') {
             $inMode = $this->input->post('inMode');
+            $inIdx = $this->input->post('inIdx');
             $inId = $this->input->post('inId');
             $inName = $this->input->post('inName');
             $inDepartment = $this->input->post('inDepartment');
@@ -90,17 +91,7 @@ class User_management extends CI_Controller
             $inPassword = password_hash($this->input->post('inPassword'), PASSWORD_DEFAULT);
             $inStatus = $this->input->post('inStatus');
 
-            $data = $this->User_management_M->save($param, $obj, $inMode, $inId, $inName, $inDepartment, $inDivision, $inRole, $inEmail, $inImage, $inPassword, $inStatus);
-        } else if ($param == 'update') {
-            if ($obj == 'exitPermit') {
-                $inId = $this->input->post('inId');
-
-                $data = $this->Hrd_M->save($param, $obj, $inId, "", "", "");
-            }
-        } else if ($param == 'new') {
-            $inId = $this->input->post('inId');
-
-            $data = $this->Hrd_M->save($param, $obj, $inId, "", "", "");
+            $data = $this->User_management_M->save($param, $obj, $inMode, $inIdx, $inId, $inName, $inDepartment, $inDivision, $inRole, $inEmail, $inImage, $inPassword, $inStatus);
         }
 
         echo (json_encode($data));
@@ -111,77 +102,8 @@ class User_management extends CI_Controller
         $param = $this->input->post('param');
         $obj = $this->input->post('obj');
 
-        $data = $this->Hrd_M->remove($param, $obj);
+        $data = $this->User_management_M->remove($param, $obj);
 
         echo (json_encode($data));
-    }
-
-    public function viewInput()
-    {
-        $this->load->view('exit_permit/view_input');
-    }
-
-    public function getData()
-    {
-        $id = $this->input->post('id');
-        $data['submenu'] = $this->db->get_where('m_submenu', ['id' => $id])->result_array();
-        echo json_encode($data);
-    }
-
-    public function update()
-    {
-        $update = $this->input->get('update');
-        $id = $this->input->get('id');
-        $redirect = '';
-
-        if ($update == 'menu') {
-            $inMenu = $this->input->post('inMenu');
-
-            $this->db->set('menu', $inMenu);
-            $this->db->where('id', $id);
-            $this->db->update('m_menu');
-        } else if ($update == 'submenu') {
-            $this->form_validation->set_rules('inTitle', 'Title', 'required');
-            $this->form_validation->set_rules('inMenu_id', 'Menu', 'required');
-            $this->form_validation->set_rules('inUrl', 'Url', 'required');
-            $this->form_validation->set_rules('inIcon', 'Icon', 'required');
-            $this->form_validation->set_rules('inStatus', 'Status', 'required');
-
-            $inTitle =  $this->input->post('inTitle');
-            $inMenu_id = $this->input->post('inMenu_id');
-            $inUrl =  $this->input->post('inUrl');
-            $inIcon =  $this->input->post('inIcon');
-            $inStatus =  $this->input->post('inStatus');
-
-            $this->db->set('title', $inTitle);
-            $this->db->set('menu_id', $inMenu_id);
-            $this->db->set('url', $inUrl);
-            $this->db->set('icon', $inIcon);
-            $this->db->set('status', $inStatus);
-            $this->db->where('id', $id);
-            $this->db->update('m_submenu');
-
-            $redirect = '/submenu';
-        }
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Updated !</div>');
-        redirect('menu' . $redirect);
-    }
-
-    public function delete()
-    {
-        $delete = $this->input->get('delete');
-        $id = $this->input->get('id');
-        $redirect = '';
-
-        if ($delete == 'menu') {
-            $this->db->delete('m_menu', ['id' => $id]);
-        } else if ($delete == 'submenu') {
-            $this->db->delete('m_submenu', ['id' => $id]);
-            $redirect = '/submenu';
-        }
-
-        $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">Deleted !</div>');
-        redirect('menu' . $redirect);
     }
 }

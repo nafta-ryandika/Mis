@@ -32,17 +32,13 @@
                                         <div class="form-group row">
                                             <div class="col-3">
                                                 <select class="form-control inSearchcolumn" style="width: 100%;" onchange="get('searchColumn',this,'')">
-                                                    <option value="">Parameter</option>
-                                                    <option value="dt1.employee_id">Employee ID</option>
-                                                    <option value="dt2.name">Name</option>
-                                                    <option value="dt4.department">Department</option>
-                                                    <option value="dt5.division">Division</option>
-                                                    <option value="dt1.date_in">Date IN</option>
-                                                    <option value="TIME_FORMAT(dt1.time_in, '%H:%i')">Time IN</option>
-                                                    <option value="dt1.date_out">Date OUT</option>
-                                                    <option value="TIME_FORMAT(dt1.time_out, '%H:%i')">Time OUT</option>
-                                                    <option value="dt1.necessity_id">Necessity</option>
-                                                    <option value="dt1.status">Status</option>
+                                                    <option value="user_id">ID</option>
+                                                    <option value="name">Name</option>
+                                                    <option value="department_id">Department</option>
+                                                    <option value="division_id">Division</option>
+                                                    <option value="role_id">Role</option>
+                                                    <option value="email">Email</option>
+                                                    <option value="status">Status</option>
                                                 </select>
                                             </div>
                                             <div class="col-2">
@@ -196,6 +192,101 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary btn-md col-2" id="btnSave">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetail" tabindex="-1" aria-labelledby="modalDetaillabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalDetaillabel">Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1"></div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">ID</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inId"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Name</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inName"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Department</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDepartment"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Division</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDivision"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Role</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inRole"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Email</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inEmail"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Image</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800">
+                                        <img src="" class="img-thumbnail" id="inImage">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Status</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inStatus"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Created By</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inCreated_by"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Created At</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inCreated_at"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-md col-2" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
