@@ -25,10 +25,12 @@ class User_management extends CI_Controller
 
     public function viewData()
     {
+        $inWhere = $this->input->post('inWhere');
+
         $sql = "SELECT 
                 *, 
                 dt1.id AS id,
-                IF(dt1.status = 0, 'Deactivate', IF(dt1.status = 1, 'Active','Unknown')) AS status_name
+                IF(dt1.status = 0, 'Not Active', IF(dt1.status = 1, 'Active','Unknown')) AS status_name
                 FROM 
                 (
                     SELECT id, user_id, name, email, image, password, company_id, department_id, division_id, role_id, `status` FROM m_user WHERE 1
@@ -38,7 +40,7 @@ class User_management extends CI_Controller
                     SELECT id, department FROM m_department WHERE 1
                 )dt2
                 ON dt1.department_id = dt2.id
-                LEFT JOIN 
+                JOIN 
                 (
                     SELECT id, department_id, division FROM m_division WHERE 1
                 )dt3
@@ -47,7 +49,8 @@ class User_management extends CI_Controller
                 (
                     SELECT id, `role` FROM m_role WHERE 1
                 )dt4
-                ON dt1.role_id = dt4.id";
+                ON dt1.role_id = dt4.id 
+                WHERE 1 " . $inWhere;
         $data['user'] = $this->db->query($sql)->result_array();
 
         $this->load->view('user_management/view_data', $data);

@@ -76,7 +76,7 @@ class User_management_M extends CI_Model
             $query = "SELECT 
                         id, user_id, name, email, image, company_id, department_id, division_id, role_id, created_by,
                         DATE_FORMAT(created_at, '%d-%m-%Y %H:%i:%s') as created_at,
-                        IF(`status` = 1, 'Active', 'Deactivate') as `status`,
+                        IF(`status` = 1, 'Active', 'Not Active') as `status`,
                         (SELECT department FROM m_department WHERE id = department_id) AS department,
                         (SELECT division FROM m_division WHERE id = division_id) AS division,
                         (SELECT `role` FROM m_role WHERE id = role_id) AS `role`
@@ -109,7 +109,7 @@ class User_management_M extends CI_Model
                     'user_id' => $inId,
                     'name' => $inName,
                     'email' => $inEmail,
-                    'image' => "default.jpg",
+                    'image' => "default.png",
                     'password' => addslashes($inPassword),
                     'company_id' => '1',
                     'department_id' => $inDepartment,
@@ -132,14 +132,14 @@ class User_management_M extends CI_Model
                     'user_id' => $inId,
                     'name' => $inName,
                     'email' => $inEmail,
-                    'image' => "default.jpg",
+                    'image' => "default.png",
                     'company_id' => '1',
                     'department_id' => $inDepartment,
                     'division_id' => $inDivision,
                     'role_id' => $inRole,
                     'status' => $inStatus,
                     'created_by' => $_SESSION['user_id'],
-                    'created_at' => date('Y-m-d h:i:s')
+                    'created_at' => date('Y-m-d H:i:s')
                 );
 
                 $this->db->db_debug = false;
@@ -171,6 +171,27 @@ class User_management_M extends CI_Model
             } else {
                 $res['res'] = $this->db->error();
                 $res['res'] = $res['res']['message'];
+            }
+        } else if ($param == "password") {
+            $length = 6;
+            $inPassword =  substr(str_shuffle('0123456789'), 1, $length);
+
+            $data = array(
+                'password' => addslashes(password_hash($inPassword, PASSWORD_DEFAULT)),
+                'created_by' => $_SESSION['user_id'],
+                'created_at' => date('Y-m-d H:i:s')
+            );
+
+            $this->db->db_debug = false;
+
+            $this->db->where("id", $obj);
+
+            if ($this->db->update("m_user", $data)) {
+                $res['res'] = 'success';
+                $res['password'] = $inPassword;
+            } else {
+                $res['res'] =  $this->db->error();
+                $res['res'] = $data['res']['message'];
             }
         }
 

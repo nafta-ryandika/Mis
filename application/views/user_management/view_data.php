@@ -39,11 +39,9 @@
                     $status = $data_user['status'];
 
                     if ($status == 0) {
-                        echo "<text style='color : orange;'>";
+                        echo "<text style='color : red;'>";
                     } else if ($status == 1) {
                         echo "<text style='color : green;'>";
-                    } else if ($status == 2) {
-                        echo "<text style='color : red;'>";
                     } else {
                         echo "<text>";
                     }
@@ -57,6 +55,7 @@
                     <a class="btn btn-info m-1" id="btnDetail" title="Detail" onclick="get('detail','<?= $data_user['id']; ?>','')"><i class="fas fa-fw fa-solid fa-eye m-1"></i></a>
                     <a class="btn btn-warning m-1" id="btnEdit" title="Edit" onclick="get('edit','<?= $data_user['id']; ?>','')"><i class="fas fa-fw fa-solid fa-pen-to-square m-1"></i></a>
                     <a class="btn btn-danger m-1" id="btnDelete" title="Delete" onclick="remove('data','<?= $data_user['id']; ?>')"><i class="fas fa-fw fa-solid fa-square-xmark m-1"></i></a>
+                    <a class="btn btn-success m-1" id="btnReset" title="Reset Password" onclick="remove('password','<?= $data_user['id']; ?>')"><i class="fas fa-fw fa-solid fa-retweet m-1"></i></a>
                 </td>
             </tr>
         <?php

@@ -14,6 +14,17 @@ $(document).ready(function() {
 
 	$('#modalAdd').on('hidden.bs.modal', function () {
 		clear('user','');
+		viewData();
+	})
+
+	$("#inRepeatpassword").on("keyup",function(){
+		var inPassword = $("#inPassword").val();
+		var inRepeatpassword = $("#inRepeatpassword").val();
+
+		if (inPassword == inRepeatpassword) {
+			$("#inPassword").removeClass("is-invalid");
+			$("#inRepeatpassword").removeClass("is-invalid");
+		}
 	})
 
     viewData();
@@ -95,9 +106,7 @@ function viewData() {
 		success: function (data) {
 			$('#tableArea').html(data);
 			$(function () {
-				$("#dataTable").DataTable({
-					columnDefs:[{targets:[7,8,9,10], class:"nowrap-column"}]
-				});
+				$("#dataTable").DataTable();
 			})
 		}
 	});
@@ -125,6 +134,7 @@ function get(param,obj,callBack) {
 					$("#inIdx").val(user_data.id);
 					$("#inId").val(user_data.user_id);
 					$("#inName").val(user_data.name);	
+					$("#inEmail").val(user_data.email);	
 
 					$("#inPassword").closest("div").parent("div").hide();
 					$("#inRepeatpassword").closest("div").parent("div").hide();
@@ -138,16 +148,15 @@ function get(param,obj,callBack) {
 
 			$('#tableSearch tr:eq('+rowIndex+') .col-5').html('<input type="text" class="form-control inSearchinput">');
 
-			if (searchColumn == "dt1.date_in" || searchColumn == "dt1.date_out") {
-				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','date');
-			} else if (searchColumn == "TIME_FORMAT(dt1.time_in, '%H:%i')" || searchColumn == "TIME_FORMAT(dt1.time_out, '%H:%i')") {
-				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','time');
-			} else if (searchColumn == "dt1.necessity_id") {
-				get(searchColumn,"1",function(data){
+			if (searchColumn == "dt1.department_id") {
+				get("searchColumn"+searchColumn,"",function(data){
+					$('#tableSearch tr:eq('+rowIndex+') .col-5').html(data);
+				})
+			} else if (searchColumn == "dt1.role_id") {
+				get("searchColumn"+searchColumn,"",function(data){
 					$('#tableSearch tr:eq('+rowIndex+') .col-5').html(data);
 				})
 			} else if (searchColumn == "status") {
-				console.log("searchColumn"+searchColumn);
 				get("searchColumn"+searchColumn,"",function(data){
 					$('#tableSearch tr:eq('+rowIndex+') .col-5').html(data);
 				})
@@ -283,17 +292,68 @@ function get(param,obj,callBack) {
 			}
 		})
 	} else if (param == "searchColumnstatus") {
-		if (param == "dt1.status") {
-			var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
-							<option value="">Select</option>\n\
-							<option value="0">Pending</option>\n\
-							<option value="1">Complete</option>\n\
-							<option value="2">Uncomplete</option>\n\
-						</select>';
-			
-			callBack(html);
-		}
-	}
+		var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
+						<option value="">Select</option>\n\
+						<option value="0">Not Active</option>\n\
+						<option value="1">Active</option>\n\
+					</select>';
+		
+		callBack(html);
+	} else if (param == "searchColumndt1.department_id") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: "inDepartment",
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			success: function (data) {
+					var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
+									<option value="">Select</option>';
+					var i;
+	
+					for (i=0; i<data.res.length; i++) {
+						html += '<option value="' + data.res[i].id + '">' + data.res[i].department + '</option>';
+					}
+
+					html += '</select>';
+
+					callBack(html);
+			}
+		});
+	} else if (param == "searchColumndt1role_id") {
+		$.ajax({
+			type: "POST",
+			url: base_url+"user_management/get",
+			data: {
+				param: "inRole",
+				obj: obj
+			},
+			cache: false,
+			dataType: "JSON",
+			beforeSend: function(data) {
+				$('#inDivision').select2({
+					dropdownParent: $('#modalAdd'),
+					theme: 'bootstrap4'
+				})
+			},
+			success: function (data) {
+					var html = '<select class="form-control inSearchinput" style="width: 100%;">\n\
+									<option value="">Select</option>';
+					var i;
+
+					for (i=0; i<data.res.length; i++) {
+						html += '<option value="' + data.res[i].id + '">' + data.res[i].role + '</option>';
+					}
+
+					html += '</select>';
+
+					callBack(html);
+			}
+		});
+	} 
 }
 
 function report(param,obj){
@@ -371,16 +431,13 @@ function add(param,obj){
 										<div class="col-3">\n\
 											<select class="form-control inSearchcolumn" style="width: 100%;" onchange="get(\'searchColumn\',this,\'\')">\n\
 												<option value="">Parameter</option>\n\
-												<option value="dt1.employee_id">Employee ID</option>\n\
-												<option value="dt2.name">Name</option>\n\
-												<option value="dt4.department">Department</option>\n\
-												<option value="dt5.division">Division</option>\n\
-												<option value="dt1.date_in">Date IN</option>\n\
-												<option value="TIME_FORMAT(dt1.time_in, \'%H:%i\')">Time IN</option>\n\
-												<option value="dt1.date_out">Date OUT</option>\n\
-												<option value="TIME_FORMAT(dt1.time_out, \'%H:%i\')">Time OUT</option>\n\
-												<option value="dt1.necessity_id">Necessity</option>\n\
-												<option value="dt1.status">Status</option>\n\
+												<option value="user_id">ID</option>\n\
+												<option value="name">Name</option>\n\
+												<option value="dt1.department_id">Department</option>\n\
+												<option value="dt3.division">Division</option>\n\
+												<option value="dt1.role_id">Role</option>\n\
+												<option value="email">Email</option>\n\
+												<option value="status">Status</option>\n\
 											</select>\n\
 										</div>\n\
 										<div class="col-2">\n\
@@ -502,6 +559,7 @@ function save(param,obj){
 }
 
 function clear(param,obj) {
+	console.log("test");
 	if (param == "user") {
 		$('#inId').val("");
 		$('#inName').val("");
@@ -561,10 +619,9 @@ function remove(param,obj) {
 					dataType: "JSON",
 					success: function (data) {
 						if (data.res == 'success') {
-							Swal.fire({
-								title: "Data Saved!",
-								icon: "success",
-								timer: 1000
+							swalWithBootstrapButtons.fire({
+								title: "Deleted!",
+								icon: "success"
 							}).then(function () { 
 								viewData();
 							});
@@ -573,10 +630,56 @@ function remove(param,obj) {
 						} 
 					}
 				});
-
+			} else if (
+				result.dismiss === Swal.DismissReason.cancel
+			) {
 				swalWithBootstrapButtons.fire({
-					title: "Deleted!",
-					icon: "success"
+					title: "Cancelled",
+					icon: "error"
+				});
+			}
+		});
+	}
+	else if (param == "password") {
+		const swalWithBootstrapButtons = Swal.mixin({
+			customClass: {
+				confirmButton: "btn btn-lg btn-success m-3",
+				cancelButton: "btn btn-lg btn-danger m-3"
+			},
+			buttonsStyling: false
+		});
+
+		swalWithBootstrapButtons.fire({
+			title: "Are you sure?",
+			icon: "warning",
+			showCancelButton: true,
+			confirmButtonText: "Yes",
+			cancelButtonText: "No",
+			reverseButtons: true
+		}).then((result) => {
+			if (result.isConfirmed) {
+				$.ajax({
+					type: "POST",
+					url: base_url+"user_management/remove",
+					data: {
+						param: param,
+						obj: obj
+					},
+					cache: false,
+					dataType: "JSON",
+					success: function (data) {
+						if (data.res == 'success') {
+							swalWithBootstrapButtons.fire({
+								title: "Reset!",
+								text: "New Password : " + data.password,
+								icon: "success"
+							}).then(function () { 
+								viewData();
+							});
+						} else if (date.err == '') {
+							console.log(data.err);
+						} 
+					}
 				});
 			} else if (
 				result.dismiss === Swal.DismissReason.cancel

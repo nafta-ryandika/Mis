@@ -34,9 +34,9 @@
                                                 <select class="form-control inSearchcolumn" style="width: 100%;" onchange="get('searchColumn',this,'')">
                                                     <option value="user_id">ID</option>
                                                     <option value="name">Name</option>
-                                                    <option value="department_id">Department</option>
-                                                    <option value="division_id">Division</option>
-                                                    <option value="role_id">Role</option>
+                                                    <option value="dt1.department_id">Department</option>
+                                                    <option value="dt3.division">Division</option>
+                                                    <option value="dt1.role_id">Role</option>
                                                     <option value="email">Email</option>
                                                     <option value="status">Status</option>
                                                 </select>
