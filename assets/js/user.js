@@ -410,12 +410,12 @@ function report(param,obj){
 	}
 
 	if (param == "pdf") {
-		if (obj == "exitPermit") {
-			window.open(base_url+'report/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
+		if (obj == "user") {
+			window.open(base_url+'report/user_management?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
 		}
 	}
 	else if (param == "excel") {
-		if (obj == "exitPermit") {
+		if (obj == "user") {
 			window.open(base_url+'report/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
 		}
 	}
