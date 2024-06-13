@@ -25,6 +25,18 @@ class Hrd extends CI_Controller
 
     public function viewData()
     {
+        // check status audit
+        $data_audit = $this->db->get_where('m_audit_status', ['id' => 6])->row_array();
+        $status_audit = $data_audit["status"];
+
+        if ($status_audit == 1) {
+            $t_exit_permit = "t_audit_exit_permit";
+            $m_employee = "m_audit_employee";
+        } else {
+            $t_exit_permit = "t_exit_permit";
+            $m_employee = "m_employee";
+        }
+
         $sql_exit_permit = "SELECT * , 
                             dt1.id AS transaction_id,
                             (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
@@ -34,13 +46,13 @@ class Hrd extends CI_Controller
                             FROM 
                             (
                                 SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark, status,created_at, log_at 
-                                FROM t_exit_permit a 
+                                FROM " . $t_exit_permit . " a 
                                 WHERE 1
                             )dt1
                             LEFT JOIN
                             (
                                 SELECT id, card, name, company_id, department_id, division_id, position_id 
-                                FROM m_employee b 
+                                FROM " . $m_employee . " b 
                                 WHERE 1
                             )dt2
                             ON dt1.employee_id = dt2.id
@@ -65,6 +77,7 @@ class Hrd extends CI_Controller
                             )dt6
                             ON dt2.position_id = dt6.id 
                             ORDER BY created_at DESC, log_at DESC";
+
         $data['exit_permit'] = $this->db->query($sql_exit_permit)->result_array();
 
         $this->load->view('exit_permit/view_data', $data);

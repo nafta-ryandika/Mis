@@ -23,7 +23,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'http://192.168.10.20/Mis/';
+$config['base_url'] = 'http://' . $_SERVER['HTTP_HOST'] . '/app-fertilizer/';
 
 /*
 |--------------------------------------------------------------------------

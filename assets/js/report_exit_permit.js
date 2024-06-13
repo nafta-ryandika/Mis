@@ -126,7 +126,7 @@ function get(param,obj,callBack) {
 			$('#tableSearch tr:eq('+rowIndex+') .col-5').html('<input type="text" class="form-control inSearchinput">');
 
 			if (searchColumn == "dt1.date_in" || searchColumn == "dt1.date_out") {
-				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','date');
+				// $('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','date');
 			} else if (searchColumn == "TIME_FORMAT(dt1.time_in, '%H:%i')" || searchColumn == "TIME_FORMAT(dt1.time_out, '%H:%i')") {
 				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','time');
 			} else if (searchColumn == "dt1.necessity_id") {
@@ -202,6 +202,11 @@ function report(param,obj){
 			window.open(base_url+'report/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
 		}
 	}
+	else if (param == "pdf2") {
+		if (obj == "exitPermit") {
+			window.open(base_url+'report/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
+		}
+	}
 	else if (param == "excel") {
 		if (obj == "exitPermit") {
 			window.open(base_url+'report/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
@@ -223,10 +228,10 @@ function add(param,obj){
 												<option value="dt2.name">Name</option>\n\
 												<option value="dt4.department">Department</option>\n\
 												<option value="dt5.division">Division</option>\n\
-												<option value="dt1.date_in">Date IN</option>\n\
-												<option value="TIME_FORMAT(dt1.time_in, \'%H:%i\')">Time IN</option>\n\
 												<option value="dt1.date_out">Date OUT</option>\n\
 												<option value="TIME_FORMAT(dt1.time_out, \'%H:%i\')">Time OUT</option>\n\
+												<option value="dt1.date_in">Date IN</option>\n\
+												<option value="TIME_FORMAT(dt1.time_in, \'%H:%i\')">Time IN</option>\n\
 												<option value="dt1.necessity_id">Necessity</option>\n\
 												<option value="dt1.status">Status</option>\n\
 											</select>\n\

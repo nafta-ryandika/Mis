@@ -38,6 +38,19 @@
                     <div class="text-center">
                         <div class="error mx-auto" data-text="403">403</div>
                         <p class="lead text-gray-800 mb-5">Access Forbiddden</p>
+                        <?php
+                        $role_id = $this->session->userdata['role_id'];
+
+                        if ($role_id == 1) {
+                            redirect('administrator');
+                        } else if ($role_id == 6) {
+                            redirect('vote');
+                        } else if ($role_id == 4) {
+                            redirect('hrd');
+                        } else {
+                            redirect('user');
+                        }
+                        ?>
                         <a href="<?= base_url('user'); ?>">&larr; Back to Dashboard</a>
                     </div>
 

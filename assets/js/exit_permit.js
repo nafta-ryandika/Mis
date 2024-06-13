@@ -4,6 +4,7 @@ $(document).ready(function() {
     $('#modalAdd').on('hidden.bs.modal', function () {
         $("#inNecessity").val('');
         $("#inRemark").val('');
+        $("#inTransaction_id").val('');
     })
 
 	$('#modalAdd').on('shown.bs.modal', function() {
@@ -92,8 +93,8 @@ function check(param,obj){
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDepartment").text(data.department);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDivision").text(data.division);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inPosition").text(data.position);
-					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDate_in").text(data.date_in);
-					$("#modalUpdate .modal-dialog .modal-content .modal-body #inTime_in").text(data.time_in);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inDate_out").text(data.date_out);
+					$("#modalUpdate .modal-dialog .modal-content .modal-body #inTime_out").text(data.time_out);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inNecessity").text(data.necessity);
 					$("#modalUpdate .modal-dialog .modal-content .modal-body #inRemark").text(data.remark);
 					modal = data.res;
@@ -132,8 +133,8 @@ function check(param,obj){
 							$("#modalAdd .modal-dialog .modal-content .modal-body #inDepartment").val(data.department);
 							$("#modalAdd .modal-dialog .modal-content .modal-body #inDivision").val(data.division);
 							$("#modalAdd .modal-dialog .modal-content .modal-body #inPosition").val(data.position);
-							$("#modalAdd .modal-dialog .modal-content .modal-body #inDate_in").val(data.date_in);
-							$("#modalAdd .modal-dialog .modal-content .modal-body #inTime_in").val(data.time_in);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inDate_out").val(data.date_out);
+							$("#modalAdd .modal-dialog .modal-content .modal-body #inTime_out").val(data.time_out);
 							$("#modalAdd .modal-dialog .modal-content .modal-body #inNecessity").val(data.necessity_id);
 							$("#modalAdd .modal-dialog .modal-content .modal-body #inRemark").val(data.remark);
 							modal = data.res;

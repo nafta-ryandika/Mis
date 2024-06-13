@@ -28,10 +28,10 @@
                                                     <option value="dt2.name">Name</option>
                                                     <option value="dt4.department">Department</option>
                                                     <option value="dt5.division">Division</option>
-                                                    <option value="dt1.date_in">Date IN</option>
-                                                    <option value="TIME_FORMAT(dt1.time_in, '%H:%i')">Time IN</option>
                                                     <option value="dt1.date_out">Date OUT</option>
                                                     <option value="TIME_FORMAT(dt1.time_out, '%H:%i')">Time OUT</option>
+                                                    <option value="dt1.date_in">Date IN</option>
+                                                    <option value="TIME_FORMAT(dt1.time_in, '%H:%i')">Time IN</option>
                                                     <option value="dt1.necessity_id">Necessity</option>
                                                     <option value="dt1.status">Status</option>
                                                 </select>
@@ -59,6 +59,7 @@
                                                 </button>
                                                 <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
                                                     <a class="dropdown-item" href="#" onclick="report('pdf','exitPermit')">PDF</a>
+                                                    <!-- <a class="dropdown-item" href="#" onclick="report('pdf2','exitPermit')">PDF (FRM-SKR-039 REV.01) </a> -->
                                                     <a class="dropdown-item" href="#" onclick="report('excel','exitPermit')">Excel</a>
                                                 </div>
                                             </div>

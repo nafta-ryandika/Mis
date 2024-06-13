@@ -11,7 +11,7 @@
                         <div class="col-lg">
                             <div class="p-5">
                                 <div class="text-center">
-                                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?= base_url('assets/'); ?>img/logo_mmp.png" alt="...">
+                                    <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?= base_url('assets/'); ?>img/icon.png" alt="...">
                                 </div>
                                 <div class="text-center mb-3">
                                     <b style="font-size: 30px;">Management</b><a style="font-size: 24px;"> Information System</a>
@@ -31,12 +31,6 @@
                                     </button>
                                 </form>
                                 <hr>
-                                <div class="text-center">
-                                    <a class="small" href="<?= base_url('auth/forgotPassword') ?>">Forgot Password?</a>
-                                </div>
-                                <div class="text-center">
-                                    <a class="small" href="<?= base_url('auth/registration') ?>">Create an Account!</a>
-                                </div>
                             </div>
                         </div>
                     </div>
