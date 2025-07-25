@@ -30,53 +30,40 @@ class Hrd extends CI_Controller
         $status_audit = $data_audit["status"];
 
         if ($status_audit == 1) {
-            $t_exit_permit = "t_audit_exit_permit";
-            $m_employee = "m_audit_employee";
+            $t_exit_permit = "`mis`.t_audit_exit_permit";
+            $m_employee = "hrms.audit_mmp_tb_m_kry";
         } else {
-            $t_exit_permit = "t_exit_permit";
-            $m_employee = "m_employee";
+            $t_exit_permit = "`mis`.t_exit_permit";
+            $m_employee = "hrms.tb_m_kry";
         }
 
-        $sql_exit_permit = "SELECT * , 
+        $sql_exit_permit = "SELECT 
+                            dt1.* , 
                             dt1.id AS transaction_id,
-                            (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
+                            (SELECT necessity FROM `mis`.m_necessity WHERE id = dt1.necessity_id) AS necessity,
                             DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
                             DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,
-                            IF(dt1.status = 0, 'Pending', IF(dt1.status = 1, 'Complete', IF(dt1.status = 2, 'Uncomplete','Unknown'))) AS status_name
+                            IF(dt1.status = 0, 'Pending', IF(dt1.status = 1, 'Complete', IF(dt1.status = 2, 'Uncomplete','Unknown'))) AS status_name,
+                            (SELECT Nama_Div FROM hrms.tb_m_div WHERE Stat = 'Aktif' AND UCode_Div = dt2.UCode_Div) AS company,
+                            (SELECT Nama_Dept FROM hrms.tb_m_dept WHERE Stat = 'Aktif' AND Ucode_Dept = dt2.Ucode_Dept) AS department,
+                            (SELECT Nama_Sec FROM hrms.tb_m_sec WHERE Stat = 'Aktif' AND Ucode_Sec = dt2.Ucode_Sec) AS division,
+                            (SELECT Nama_Jbt FROM hrms.tb_m_jbt WHERE Stat = 'Aktif' AND Ucode_Jbt = dt2.Ucode_Jbt) AS `position`,
+                            dt2.Nama_Kry AS name
                             FROM 
                             (
                                 SELECT id, employee_id, date_in, time_in, date_out, time_out, necessity_id, remark, status,created_at, log_at 
                                 FROM " . $t_exit_permit . " a 
                                 WHERE 1
                             )dt1
-                            LEFT JOIN
+                            INNER JOIN
                             (
-                                SELECT id, card, name, company_id, department_id, division_id, position_id 
+                                SELECT 
+                                Kode_Kry, Nama_Kry, Ucode_Div, Ucode_Dept, Ucode_Sec, Ucode_Jbt, No_RFID
                                 FROM " . $m_employee . " b 
-                                WHERE 1
+                                WHERE UCode_Div = '11330000000001'
                             )dt2
-                            ON dt1.employee_id = dt2.id
-                            LEFT JOIN 
-                            (
-                                SELECT id, company FROM m_company c WHERE 1 
-                            )dt3
-                            ON dt2.company_id = dt3.id 
-                            LEFT JOIN 
-                            (
-                                SELECT id, department FROM  m_department d WHERE 1
-                            )dt4
-                            ON dt2.department_id = dt4.id 
-                            LEFT JOIN 
-                            (
-                                SELECT id, division FROM m_division e WHERE 1 
-                            )dt5
-                            ON dt2.division_id = dt5.id
-                            LEFT JOIN 
-                            (
-                                SELECT id, `position` FROM m_position f WHERE 1
-                            )dt6
-                            ON dt2.position_id = dt6.id 
-                            ORDER BY created_at DESC, log_at DESC";
+                            ON dt1.employee_id = dt2.Kode_Kry
+                            ORDER BY dt1.date_out DESC, dt1.time_in DESC, dt1.created_at DESC, dt1.log_at DESC";
 
         $data['exit_permit'] = $this->db->query($sql_exit_permit)->result_array();
 

@@ -18,21 +18,26 @@ class Hrd_M extends CI_Model
         $status_audit = $data_audit["status"];
 
         if ($status_audit == 1) {
-            $t_exit_permit = "t_audit_exit_permit";
-            $m_employee = "m_audit_employee";
+            $t_exit_permit = "`mis`.t_audit_exit_permit";
+            $m_employee = "hrms.audit_mmp_tb_m_kry";
         } else {
-            $t_exit_permit = "t_exit_permit";
-            $m_employee = "m_employee";
+            $t_exit_permit = "`mis`.t_exit_permit";
+            $m_employee = "hrms.tb_m_kry";
         }
 
         $data = array();
         if ($param == "employeeId") {
-            $query = "SELECT *, 
-                    (SELECT department FROM m_department WHERE id = department_id) AS department,
-                    (SELECT division FROM m_division WHERE id = division_id) AS division,
-                    (SELECT position FROM m_position WHERE id = position_id) AS position 
-                    FROM " . $m_employee . "
-                    WHERE id = '" . $obj . "' OR card = '" . $obj . "'";
+            $query = "SELECT 
+                    Kode_Kry, Nama_Kry, Ucode_Div, Ucode_Dept, Ucode_Sec, Ucode_Jbt, No_RFID, 
+                    (SELECT Nama_Div FROM hrms.tb_m_div WHERE Stat = 'Aktif' AND UCode_Div = a.UCode_Div) AS company,
+                    (SELECT Nama_Dept FROM hrms.tb_m_dept WHERE Stat = 'Aktif' AND Ucode_Dept = a.Ucode_Dept) AS department,
+                    (SELECT Nama_Sec FROM hrms.tb_m_sec WHERE Stat = 'Aktif' AND Ucode_Sec = a.Ucode_Sec) AS division,
+                    (SELECT Nama_Jbt FROM hrms.tb_m_jbt WHERE Stat = 'Aktif' AND Ucode_Jbt = a.Ucode_Jbt) AS `position`,
+                    a.Kode_Kry AS `id`,
+                    a.Nama_Kry AS name
+                    FROM " . $m_employee . " a
+                    WHERE UCode_Div = '11330000000001'AND (Kode_Kry = '" . $obj . "' OR No_RFID = '" . $obj . "')";
+
             $row = $this->db->query($query)->num_rows();
 
             if ($row == 0) {
@@ -95,30 +100,31 @@ class Hrd_M extends CI_Model
             if ($objx[0] == "exitPermit") {
                 if ($objx[1] == "detail") {
                     $query = "SELECT 
-                                    *,
-                                    (SELECT department FROM m_department WHERE id = department_id) AS department,
-                                    (SELECT division FROM m_division WHERE id = division_id) AS division,
-                                    (SELECT position FROM m_position WHERE id = position_id) AS position,
-                                    (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
-                                    dt1.id AS transaction_id,  
-                                    dt2.id AS employee_id,
-                                    DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
-                                    DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,  
-                                    DATE_FORMAT(dt1.created_at, '%d-%m-%Y %H:%i:%s') as created_at,
-                                    DATE_FORMAT(dt1.log_at, '%d-%m-%Y %H:%i:%s') as log_at  
+                                    dt1.*, 
+                                    (SELECT Nama_Div FROM hrms.tb_m_div WHERE Stat = 'Aktif' AND UCode_Div = dt2.UCode_Div) AS company,
+                                    (SELECT Nama_Dept FROM hrms.tb_m_dept WHERE Stat = 'Aktif' AND Ucode_Dept = dt2.Ucode_Dept) AS department,
+                                    (SELECT Nama_Sec FROM hrms.tb_m_sec WHERE Stat = 'Aktif' AND Ucode_Sec = dt2.Ucode_Sec) AS division,
+                                    (SELECT Nama_Jbt FROM hrms.tb_m_jbt WHERE Stat = 'Aktif' AND Ucode_Jbt = dt2.Ucode_Jbt) AS `position`,
+                                    dt2.Nama_Kry AS `name`,
+                                (SELECT necessity FROM `mis`.m_necessity WHERE id = dt1.necessity_id) AS necessity,
+                                dt1.id AS transaction_id,  
+                                dt2.Kode_Kry AS employee_id,
+                                DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
+                                DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,  
+                                DATE_FORMAT(dt1.created_at, '%d-%m-%Y %H:%i:%s') as created_at,
+                                DATE_FORMAT(dt1.log_at, '%d-%m-%Y %H:%i:%s') as log_at    
                                 FROM 
                                 (
                                     SELECT * FROM " . $t_exit_permit . " a WHERE a.id = '" . $param . "'
                                 )dt1
-                                LEFT JOIN 
+                                INNER JOIN 
                                 (
-                                    SELECT *, 
-                                (SELECT department FROM m_department WHERE id = department_id) AS department,
-                                (SELECT division FROM m_division WHERE id = division_id) AS division,
-                                (SELECT position FROM m_position WHERE id = position_id) AS position 
-                                FROM " . $m_employee . " 
+                                SELECT 
+                                    Kode_Kry, Nama_Kry, Ucode_Div, Ucode_Dept, Ucode_Sec, Ucode_Jbt, No_RFID
+                                    FROM " . $m_employee . " b
+                                    WHERE b.Ucode_Div = '11330000000001' 
                                 )dt2
-                                ON dt1.employee_id = dt2.id";
+                                ON dt1.employee_id = dt2.Kode_Kry";
                     $row = $this->db->query($query)->num_rows();
 
                     if ($row > 0) {
@@ -148,30 +154,31 @@ class Hrd_M extends CI_Model
                     }
                 } else if ($objx[1] == "edit") {
                     $query = "SELECT 
-                                    *,
-                                    (SELECT department FROM m_department WHERE id = department_id) AS department,
-                                    (SELECT division FROM m_division WHERE id = division_id) AS division,
-                                    (SELECT position FROM m_position WHERE id = position_id) AS position,
-                                    (SELECT necessity FROM m_necessity WHERE id = dt1.necessity_id) AS necessity,
-                                    dt1.id AS transaction_id,  
-                                    dt2.id AS employee_id,
-                                    DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
-                                    DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,  
-                                    DATE_FORMAT(dt1.created_at, '%d-%m-%Y %H:%i:%s') as created_at,
-                                    DATE_FORMAT(dt1.log_at, '%d-%m-%Y %H:%i:%s') as log_at  
-                                FROM 
-                                (
-                                    SELECT * FROM " . $t_exit_permit . " a WHERE a.id = '" . $param . "'
-                                )dt1
-                                LEFT JOIN 
-                                (
-                                    SELECT *, 
-                                (SELECT department FROM m_department WHERE id = department_id) AS department,
-                                (SELECT division FROM m_division WHERE id = division_id) AS division,
-                                (SELECT position FROM m_position WHERE id = position_id) AS position 
-                                FROM " . $m_employee . " 
-                                )dt2
-                                ON dt1.employee_id = dt2.id";
+                                dt1.*, 
+                                (SELECT Nama_Div FROM hrms.tb_m_div WHERE Stat = 'Aktif' AND UCode_Div = dt2.UCode_Div) AS company,
+                                (SELECT Nama_Dept FROM hrms.tb_m_dept WHERE Stat = 'Aktif' AND Ucode_Dept = dt2.Ucode_Dept) AS department,
+                                (SELECT Nama_Sec FROM hrms.tb_m_sec WHERE Stat = 'Aktif' AND Ucode_Sec = dt2.Ucode_Sec) AS division,
+                                (SELECT Nama_Jbt FROM hrms.tb_m_jbt WHERE Stat = 'Aktif' AND Ucode_Jbt = dt2.Ucode_Jbt) AS `position`,
+                                dt2.Nama_Kry AS `name`,
+                            (SELECT necessity FROM `mis`.m_necessity WHERE id = dt1.necessity_id) AS necessity,
+                            dt1.id AS transaction_id,  
+                            dt2.Kode_Kry AS employee_id,
+                            DATE_FORMAT(dt1.date_in, '%d-%m-%Y') as date_in,
+                            DATE_FORMAT(dt1.date_out, '%d-%m-%Y') as date_out,  
+                            DATE_FORMAT(dt1.created_at, '%d-%m-%Y %H:%i:%s') as created_at,
+                            DATE_FORMAT(dt1.log_at, '%d-%m-%Y %H:%i:%s') as log_at    
+                            FROM 
+                            (
+                                SELECT * FROM " . $t_exit_permit . " a WHERE a.id = '" . $param . "'
+                            )dt1
+                            INNER JOIN 
+                            (
+                            SELECT 
+                                Kode_Kry, Nama_Kry, Ucode_Div, Ucode_Dept, Ucode_Sec, Ucode_Jbt, No_RFID
+                                FROM " . $m_employee . " b
+                                WHERE b.Ucode_Div = '11330000000003' 
+                            )dt2
+                            ON dt1.employee_id = dt2.Kode_Kry";
                     $row = $this->db->query($query)->num_rows();
 
                     if ($row > 0) {
@@ -231,11 +238,11 @@ class Hrd_M extends CI_Model
         $status_audit = $data_audit["status"];
 
         if ($status_audit == 1) {
-            $t_exit_permit = "t_audit_exit_permit";
-            $m_employee = "m_audit_employee";
+            $t_exit_permit = "`mis`.t_audit_exit_permit";
+            $m_employee = "hrms.audit_mmp_tb_m_kry";
         } else {
-            $t_exit_permit = "t_exit_permit";
-            $m_employee = "m_employee";
+            $t_exit_permit = "`mis`.t_exit_permit";
+            $m_employee = "hrms.tb_m_kry";
         }
 
         $curdate = date("Y-m-d");
@@ -344,11 +351,11 @@ class Hrd_M extends CI_Model
         $status_audit = $data_audit["status"];
 
         if ($status_audit == 1) {
-            $t_exit_permit = "t_audit_exit_permit";
-            $m_employee = "m_audit_employee";
+            $t_exit_permit = "`mis`.t_audit_exit_permit";
+            $m_employee = "hrms.audit_mmp_tb_m_kry";
         } else {
-            $t_exit_permit = "t_exit_permit";
-            $m_employee = "m_employee";
+            $t_exit_permit = "`mis`.t_exit_permit";
+            $m_employee = "hrms.tb_m_kry";
         }
 
         $data = array();
