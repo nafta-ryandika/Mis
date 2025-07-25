@@ -215,7 +215,7 @@ class Audit extends CI_Controller
             $numrow = 1;
             $sheet->setCellValue('A' . $numrow, "ID");
 
-            // $sheet->getStyle('A' . $numrow)->applyFromArray($style_col);
+            $sheet->getStyle('A' . $numrow)->applyFromArray($style_col);
 
             $sheet->getDefaultRowDimension()->setRowHeight(-1);
             $sheet->getPageSetup()->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
