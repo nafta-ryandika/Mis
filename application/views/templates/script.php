@@ -19,4 +19,7 @@ if ($title == 'Menu Management') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'vote.js?version=' . $xyz . '"></script>';
 } else if ($title == 'Collection Data') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'collection_data.js?version=' . $xyz . '"></script>';
+} else if ($title == 'Audit') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'audit.js?version=' . $xyz . '"></script>';
 }
+

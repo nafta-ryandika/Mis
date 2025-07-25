@@ -13,8 +13,7 @@
 	"require": {
 		"php": ">=5.3.7",
 		"mpdf/mpdf": "^8.2",
-		"maennchen/zipstream-php": "^0.5.2",
-		"phpoffice/phpspreadsheet": "^1.12"
+		"phpoffice/phpspreadsheet": "^1.25"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

@@ -94,3 +94,21 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['mssql'] = array(
+	'dsn'   => '',
+	'hostname' => '192.168.10.50',
+	'username' => 'it',
+	'password' => 'MMPacts*',
+	'database' => 'mmp_hrms',
+	'dbdriver' => 'sqlsrv',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'encrypt'  => FALSE,
+	'trust_server_certificate' => TRUE,
+);
