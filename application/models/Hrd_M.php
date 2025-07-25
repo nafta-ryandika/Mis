@@ -176,7 +176,7 @@ class Hrd_M extends CI_Model
                             SELECT 
                                 Kode_Kry, Nama_Kry, Ucode_Div, Ucode_Dept, Ucode_Sec, Ucode_Jbt, No_RFID
                                 FROM " . $m_employee . " b
-                                WHERE b.Ucode_Div = '11330000000003' 
+                                WHERE b.Ucode_Div = '11330000000001' 
                             )dt2
                             ON dt1.employee_id = dt2.Kode_Kry";
                     $row = $this->db->query($query)->num_rows();
