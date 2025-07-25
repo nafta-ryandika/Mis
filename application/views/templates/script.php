@@ -15,4 +15,8 @@ if ($title == 'Menu Management') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'report_exit_permit.js?version=' . $xyz . '"></script>';
 } else if ($title == 'User') {
     echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'user.js?version=' . $xyz . '"></script>';
+} else if ($title == 'Vote') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'vote.js?version=' . $xyz . '"></script>';
+} else if ($title == 'Collection Data') {
+    echo '<script type="text/javascript" src="' . base_url("assets/js/") . 'collection_data.js?version=' . $xyz . '"></script>';
 }

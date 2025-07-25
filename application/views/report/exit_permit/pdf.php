@@ -85,10 +85,10 @@
                 <th scope="col">Department</th>
                 <th scope="col">Division</th>
                 <th scope="col">Position</th>
-                <th scope="col">Date IN</th>
-                <th scope="col">Time IN</th>
                 <th scope="col">Date OUT</th>
                 <th scope="col">Time OUT</th>
+                <th scope="col">Date IN</th>
+                <th scope="col">Time IN</th>
                 <th scope="col">Necessity</th>
                 <th scope="col">Remark</th>
                 <th scope="col">Status</th>
@@ -106,10 +106,10 @@
                 echo '<td>' . $data_exit_permit['department'] . '</td>';
                 echo '<td>' . $data_exit_permit['division'] . '</td>';
                 echo '<td>' . $data_exit_permit['position'] . '</td>';
-                echo '<td>' . $data_exit_permit['date_in'] . '</td>';
-                echo '<td>' . $data_exit_permit['time_in'] . '</td>';
                 echo '<td>' . $data_exit_permit['date_out'] . '</td>';
                 echo '<td>' . $data_exit_permit['time_out'] . '</td>';
+                echo '<td>' . $data_exit_permit['date_in'] . '</td>';
+                echo '<td>' . $data_exit_permit['time_in'] . '</td>';
                 echo '<td>' . $data_exit_permit['necessity'] . '</td>';
                 echo '<td>' . $data_exit_permit['remark'] . '</td>';
                 echo '<td>' . $data_exit_permit['status_name'] . '</td>';

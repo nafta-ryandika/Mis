@@ -44,9 +44,14 @@ class Auth extends CI_Controller
 					];
 
 					$this->session->set_userdata($data);
+					$role_id = $user['role_id'];
 
-					if ($user['role_id'] == 1) {
+					if ($role_id == 1) {
 						redirect('administrator');
+					} else if ($role_id == 6) {
+						redirect('vote');
+					} else if ($role_id == 4) {
+						redirect('hrd');
 					} else {
 						redirect('user');
 					}

@@ -156,14 +156,14 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="row col mr-2">
-                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Date IN</div>
-                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDate_in"></div>
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Date OUT</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDate_out"></div>
                                 </div>
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="row col mr-2">
-                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Time IN</div>
-                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inTime_in"></div>
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Time OUT</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inTime_out"></div>
                                 </div>
                             </div>
                             <div class="row no-gutters align-items-center">
@@ -245,18 +245,6 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="row col mr-2">
-                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Date IN</div>
-                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDate_in"></div>
-                                </div>
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="row col mr-2">
-                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Time IN</div>
-                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inTime_in"></div>
-                                </div>
-                            </div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="row col mr-2">
                                     <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Date OUT</div>
                                     <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDate_out"></div>
                                 </div>
@@ -265,6 +253,18 @@
                                 <div class="row col mr-2">
                                     <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Time OUT</div>
                                     <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inTime_out"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Date IN</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inDate_in"></div>
+                                </div>
+                            </div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="row col mr-2">
+                                    <div class="col-sm-4 h6 font-weight-bold text-primary text-uppercase mb-1">Time IN</div>
+                                    <div class="col-sm-8 h6 mb-0 font-weight-bold text-gray-800" id="inTime_in"></div>
                                 </div>
                             </div>
                             <div class="row no-gutters align-items-center">

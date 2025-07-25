@@ -14,10 +14,10 @@
             <th scope="col">Department</th>
             <th scope="col">Division</th>
             <th scope="col">Position</th>
-            <th scope="col">Date IN</th>
-            <th scope="col">Time IN</th>
             <th scope="col">Date OUT</th>
             <th scope="col">Time OUT</th>
+            <th scope="col">Date IN</th>
+            <th scope="col">Time IN</th>
             <th scope="col">Necessity</th>
             <th scope="col">Remark</th>
             <th scope="col">Status</th>
@@ -36,10 +36,10 @@
                 <td><?= $data_exit_permit['department']; ?></td>
                 <td><?= $data_exit_permit['division']; ?></td>
                 <td><?= $data_exit_permit['position']; ?></td>
-                <td><?= $data_exit_permit['date_in']; ?></td>
-                <td><?= $data_exit_permit['time_in']; ?></td>
                 <td><?= $data_exit_permit['date_out']; ?></td>
                 <td><?= $data_exit_permit['time_out']; ?></td>
+                <td><?= $data_exit_permit['date_in']; ?></td>
+                <td><?= $data_exit_permit['time_in']; ?></td>
                 <td><?= $data_exit_permit['necessity']; ?></td>
                 <td><?= $data_exit_permit['remark']; ?></td>
                 <td>

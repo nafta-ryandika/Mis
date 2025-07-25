@@ -540,7 +540,7 @@ function save(param,obj){
 										clear('user','');
 										$("#inId").focus();	
 									} else if (inMode == "edit") {
-										clear('user','');
+										clear('user','add');
 										$('#modalAdd').modal('toggle');
 										viewData();
 									}
@@ -559,11 +559,17 @@ function save(param,obj){
 }
 
 function clear(param,obj) {
-	console.log("test");
+	// console.log("test");
 	if (param == "user") {
 		$('#inId').val("");
 		$('#inName').val("");
-		$('#inMode').val("");
+
+		if (obj == "add") {
+			$('#inMode').val('add');
+		} else {
+			$('#inMode').val("");
+		}
+		
 		$('#inDepartment').val("");
 		$('#inDivision').val("");
 		$('#inRole').val("");
