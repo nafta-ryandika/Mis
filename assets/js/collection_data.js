@@ -70,7 +70,6 @@ function check(param,obj) {
 				cache: false,
 				dataType: "JSON",
 				success: function (data) {
-					console.log(data.err+"lalala")
 					if (data.res == "Success") {
 						Swal.fire({
 							title: "Thank You!",
