@@ -48,6 +48,7 @@ class Fair_trade_M extends CI_Model
                 $res['err'] = "Data Not Found !";
             } else {
                 $data = $this->db->query($query)->row_array();
+                $employee_id = $data['id'];
                 $status = $data['status'];
 
                 if ($status == 1) {
