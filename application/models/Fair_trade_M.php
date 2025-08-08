@@ -20,7 +20,11 @@ class Fair_trade_M extends CI_Model
             $collection_id = $datax[0];
             $employee_id = $datax[1];
 
-            $query = "SELECT * FROM 
+            $query = "SELECT 
+                        *, 
+                        (SELECT Nama_Dept FROM hrms.tb_m_dept WHERE Ucode_Dept = dt2.Ucode_Dept ) AS Nama_Dept,
+                        (SELECT Nama_Sec FROM hrms.tb_m_sec WHERE Ucode_Sec = dt2.Ucode_Sec ) AS Nama_Sec 
+                        FROM 
                         (
                             SELECT 
                                 id, collection_id, `status` 
@@ -31,7 +35,7 @@ class Fair_trade_M extends CI_Model
                         JOIN 
                         (
                             SELECT 
-                                Kode_Kry, Nama_Kry, No_RFID 
+                                Kode_Kry, Nama_Kry, No_RFID, Ucode_Dept, Ucode_Sec
                             FROM hrms.tb_m_kry 
                             WHERE 
                                 Stat = 'Aktif' AND (Kode_Kry = '" . $employee_id . "' OR No_RFID = '" . $employee_id . "')
@@ -49,6 +53,9 @@ class Fair_trade_M extends CI_Model
             } else {
                 $data = $this->db->query($query)->row_array();
                 $employee_id = $data['id'];
+                $Nama_Kry = $data['Nama_Kry'];
+                $Nama_Dept = $data['Nama_Dept'];
+                $Nama_Sec = $data['Nama_Sec'];
                 $status = $data['status'];
 
                 if ($status == 1) {
@@ -68,6 +75,10 @@ class Fair_trade_M extends CI_Model
 
                     if ($this->db->update("m_employee_collection", $data1)) {
                         $res['res'] = "Success";
+                        $res['employee_id'] = $employee_id;
+                        $res['Nama_Kry'] = $Nama_Kry;
+                        $res['Nama_Dept'] = $Nama_Dept;
+                        $res['Nama_Sec'] = $Nama_Sec;
                         $res['err'] = "";
                     } else {
                         $res['res'] = "Error";

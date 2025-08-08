@@ -75,7 +75,13 @@ function check(param,obj) {
 						Swal.fire({
 							title: "Thank You!",
 							icon: "success",
-							timer: 1000
+							html: `
+									<b>ID			: </b>`+res.employee_id+`<br/>
+									<b>Name			: </b>`+res.Nama_Kry+`<br/>
+									<b>Department	: </b>`+res.Nama_Dept+`<br/>
+									<b>Section		: </b>`+res.Nama_Sec+`<br/>
+								`,
+							timer: 3000
 						}).then(function () { 
 							$("#inId").val("");
 							$("#inId").focus();
@@ -84,7 +90,7 @@ function check(param,obj) {
 						Swal.fire({
 							title: data.err,
 							icon: "error",
-							timer: 1000
+							timer: 3000
 						}).then(function () { 
 							$("#inId").val("");
 							$("#inId").focus();
@@ -93,7 +99,7 @@ function check(param,obj) {
 					else {
 						Swal.fire({
 							icon: "error",
-							timer: 1000
+							timer: 3000
 						}).then(function () { 
 							$("#inId").val("");
 							$("#inId").focus();
