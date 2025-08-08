@@ -75,10 +75,10 @@ function check(param,obj) {
 							title: "Thank You!",
 							icon: "success",
 							html: `
-									<b>ID			: </b>`+res.employee_id+`<br/>
-									<b>Name			: </b>`+res.Nama_Kry+`<br/>
-									<b>Department	: </b>`+res.Nama_Dept+`<br/>
-									<b>Section		: </b>`+res.Nama_Sec+`<br/>
+									<b>ID			: </b>`+data.employee_id+`<br/>
+									<b>Name			: </b>`+data.Nama_Kry+`<br/>
+									<b>Department	: </b>`+data.Nama_Dept+`<br/>
+									<b>Section		: </b>`+data.Nama_Sec+`<br/>
 								`,
 							timer: 3000
 						}).then(function () { 
