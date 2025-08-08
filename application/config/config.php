@@ -25,6 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 // $config['base_url'] = 'http://192.168.10.108:3000/local/Mis/';
 $config['base_url'] = 'http://' . $_SERVER['HTTP_HOST'] . '/Mis/';
+// $config['base_url'] = '/';
 
 /*
 |--------------------------------------------------------------------------

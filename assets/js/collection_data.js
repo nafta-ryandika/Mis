@@ -51,7 +51,15 @@ function check(param,obj) {
 		var inId = $("#inId").val();
 		var num = inId.length;
 
-		if (num >= 4) {
+		if (inParameter == "" || btnLock == "Lock") {
+			Swal.fire({
+				title: "Please Check Parameter !",
+				icon: "error",
+				timer: 1000
+			}).then(function () { 
+				
+			});
+		} else if (num >= 4) {
 			$.ajax({
 				type: "POST",
 				url: base_url+"fair_trade/check",
@@ -62,7 +70,17 @@ function check(param,obj) {
 				cache: false,
 				dataType: "JSON",
 				success: function (data) {
-					if (data.err != "") {
+					console.log(data.err+"lalala")
+					if (data.res == "Success") {
+						Swal.fire({
+							title: "Thank You!",
+							icon: "success",
+							timer: 1000
+						}).then(function () { 
+							$("#inId").val("");
+							$("#inId").focus();
+						});
+					} else if (data.res == "Error") {
 						Swal.fire({
 							title: data.err,
 							icon: "error",
@@ -71,9 +89,9 @@ function check(param,obj) {
 							$("#inId").val("");
 							$("#inId").focus();
 						});
-					} else {
+					}
+					else {
 						Swal.fire({
-							title: data.err,
 							icon: "error",
 							timer: 1000
 						}).then(function () { 

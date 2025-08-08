@@ -41,14 +41,17 @@ class Fair_trade_M extends CI_Model
             $row = $this->db->query($query)->num_rows();
 
             if ($row > 1) {
+                $res['res'] = "Error";
                 $res['err'] = "Duplicate Data !";
             } else if ($row == 0) {
+                $res['res'] = "Error";
                 $res['err'] = "Data Not Found !";
             } else {
                 $data = $this->db->query($query)->row_array();
                 $status = $data['status'];
 
                 if ($status == 1) {
+                    $res['res'] = "Error";
                     $res['err'] = "Participant Has Been Collected !";
                 } else {
                     $data1 = array(
@@ -66,6 +69,7 @@ class Fair_trade_M extends CI_Model
                         $res['res'] = "Success";
                         $res['err'] = "";
                     } else {
+                        $res['res'] = "Error";
                         $res['err'] = "Collect Data Error !";
                     }
                 }
