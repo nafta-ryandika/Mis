@@ -57,7 +57,8 @@ function check(param,obj) {
 				icon: "error",
 				timer: 1000
 			}).then(function () { 
-				
+				$("#inId").val("");
+				$("#inId").focus();
 			});
 		} else if (num >= 4) {
 			$.ajax({
