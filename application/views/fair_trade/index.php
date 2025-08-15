@@ -83,12 +83,11 @@
                                         <div class="form-group float-right row">
                                             <a class="btn btn-info col-6" id="btnSearch" title="Search" onclick="viewData()"><i class="fas fa-fw fa-solid fa-magnifying-glass m-1"></i>Search</a>
                                             <div class="dropdown ml-2 col-1">
-                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled>
+                                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     <i class="fas fa-fw fa-solid fa-file-export m-1"></i>Export
                                                 </button>
                                                 <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
                                                     <a class="dropdown-item" href="#" onclick="report('pdf','')">PDF</a>
-                                                    <!-- <a class="dropdown-item" href="#" onclick="report('pdf2','exitPermit')">PDF (FRM-SKR-039 REV.01) </a> -->
                                                     <a class="dropdown-item" href="#" onclick="report('excel','')">Excel</a>
                                                 </div>
                                             </div>

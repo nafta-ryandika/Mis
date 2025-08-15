@@ -48,6 +48,7 @@ function lock(){
 function check(param,obj) {
 	if (param == "inId") {
 		var inParameter = $("#inParameter").val();
+		var btnLock = $("#btnLock").text().trim();
 		var inId = $("#inId").val();
 		var num = inId.length;
 
@@ -119,7 +120,7 @@ function viewData() {
 
 	if (inParameter == "" || btnLock == "Lock") {
 		Swal.fire({
-			title: "Please Check Setting !",
+			title: "Please Check Parameter !",
 			icon: "error",
 			timer: 1000
 		})
@@ -313,6 +314,95 @@ function get(param,obj,callBack) {
 				})
 			} else {
 				$('#tableSearch tr:eq('+rowIndex+') .inSearchinput').prop('type','text');
+			}
+		}
+	}
+}
+
+function report(param,obj){
+	var inParameter = $("#inParameter").val();
+	var btnLock = $("#btnLock").text().trim();
+
+	if (inParameter == "" || btnLock == "Lock") {
+		Swal.fire({
+			title: "Please Check Parameter !",
+			icon: "error",
+			timer: 1000
+		})
+
+
+	}
+	else {
+		var rowTable = $('#tableSearch tr').length;
+		var inWhere = "";
+
+		if (rowTable == 1) {
+			var inSearchcolumn = $('.inSearchcolumn').val();
+			var inSearchparameter = $('.inSearchparameter').val();
+			var inSearchinput = $('.inSearchinput').val();
+
+			if (inSearchcolumn.trim() != "" && inSearchinput.trim() != "") {
+				if (inSearchparameter == "=") {
+					inWhere = "AND " + inSearchcolumn + " " + inSearchparameter + " " +"'" + inSearchinput + "'"; 
+				} else if (inSearchparameter == "like") {
+					inWhere = "AND " + inSearchcolumn + " " + inSearchparameter + " " +"'%" + inSearchinput.replace(" ","%") + "%'";
+				}
+			}
+		}
+		else if (rowTable > 1) {
+			var inWhere = "";
+			var inSearchcolumn = "";
+			var inSearchparameter = "";
+			var inSearchinput = "";
+			var xSearchcolumn = [];
+			var xSearchparameter = [];
+			var xSearchinput = [];
+
+			$('.inSearchcolumn').each(function(){ 
+				xSearchcolumn.push($(this).val());
+			});
+			
+			$('.inSearchparameter').each(function(){ 
+				xSearchparameter.push($(this).val());
+			});
+
+			$('.inSearchinput').each(function(){ 
+				xSearchinput.push($(this).val());
+			});
+
+			for (var i = 0; i < xSearchcolumn.length; i++) {
+				inSearchcolumn = xSearchcolumn[i];
+				inSearchparameter = xSearchparameter[i];
+				inSearchinput = xSearchinput[i];
+
+				if (inSearchcolumn.trim() != "" && inSearchinput.trim() != "") {
+					if (inSearchparameter == "=") {
+						inWhere += " AND " + inSearchcolumn + " " + inSearchparameter + " " +"'" + inSearchinput + "'"; 
+					} else if (inSearchparameter == "like") {
+						inWhere += " AND " + inSearchcolumn + " " + inSearchparameter + " " +"'%" + inSearchinput.replace(" ","%") + "%'";
+					}
+				}
+			}
+		}
+
+		var inParameter = $("#inParameter").val().trim();
+
+		if (param == "pdf") {
+			if (inWhere.trim() == "") {
+				window.open(base_url+'fair_trade/report?param='+param+'&obj='+inParameter, '_blank');
+			} else {
+				window.open(base_url+'fair_trade/report?param='+param+'&obj='+inParameter+'&where='+encodeURIComponent(inWhere), '_blank');
+				// window.open(base_url+'inventory/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
+			}
+		}
+		else if (param == "excel") {
+			if (inParameter == 1) {
+				if (inWhere.trim() == "") {
+					window.open(base_url+'fair_trade/report?param='+param+'&obj='+inParameter, '_blank');
+				} else {
+					window.open(base_url+'fair_trade/report?param='+param+'&obj='+inParameter+'&where='+encodeURIComponent(inWhere), '_blank');
+					// window.open(base_url+'inventory/report?param='+param+'&obj='+obj+'&where='+encodeURIComponent(inWhere), '_blank');
+				}
 			}
 		}
 	}
