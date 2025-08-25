@@ -193,7 +193,7 @@ class Fair_trade extends CI_Controller
                         FROM 
                         (
                             SELECT 
-                                id, collection_id, `status` 
+                                id, collection_id, `status`, created_at 
                             FROM m_employee_collection
                             WHERE
                                 collection_id = '" . $obj . "' AND `status` = 1
@@ -266,12 +266,14 @@ class Fair_trade extends CI_Controller
                 $sheet->setCellValue('C' . $numrow, "Name");
                 $sheet->setCellValue('D' . $numrow, "Department");
                 $sheet->setCellValue('E' . $numrow, "Section");
+                $sheet->setCellValue('F' . $numrow, "Created At");
 
                 $sheet->getStyle('A' . $numrow)->applyFromArray($style_col);
                 $sheet->getStyle('B' . $numrow)->applyFromArray($style_col);
                 $sheet->getStyle('C' . $numrow)->applyFromArray($style_col);
                 $sheet->getStyle('D' . $numrow)->applyFromArray($style_col);
                 $sheet->getStyle('E' . $numrow)->applyFromArray($style_col);
+                $sheet->getStyle('F' . $numrow)->applyFromArray($style_col);
 
                 $i = 1;
                 $numrow = $numrow + 1;
@@ -281,12 +283,14 @@ class Fair_trade extends CI_Controller
                     $sheet->setCellValue('C' . $numrow, $data_collection['Nama_Kry']);
                     $sheet->setCellValue('D' . $numrow, $data_collection['Nama_Dept']);
                     $sheet->setCellValue('E' . $numrow, $data_collection['Nama_Sec']);
+                    $sheet->setCellValue('F' . $numrow, $data_collection['created_at']);
 
                     $sheet->getStyle('A' . $numrow)->applyFromArray($style_row);
                     $sheet->getStyle('B' . $numrow)->applyFromArray($style_row);
                     $sheet->getStyle('C' . $numrow)->applyFromArray($style_row);
                     $sheet->getStyle('D' . $numrow)->applyFromArray($style_row);
                     $sheet->getStyle('E' . $numrow)->applyFromArray($style_row);
+                    $sheet->getStyle('F' . $numrow)->applyFromArray($style_row);
 
                     $i++;
                     $numrow++;
@@ -295,7 +299,7 @@ class Fair_trade extends CI_Controller
                 // echo $param . "lalala" . $obj . "yeyeye" . $where;
                 // die();
 
-                foreach (range('B', 'E') as $columnID) {
+                foreach (range('B', 'F') as $columnID) {
                     $sheet->getColumnDimension($columnID)->setAutoSize(true);
                 }
                 $sheet->getDefaultRowDimension()->setRowHeight(-1);
